@@ -1,0 +1,1 @@
+This folder should be read only in the container, adjust the file from your machine, not from the shell on the container.

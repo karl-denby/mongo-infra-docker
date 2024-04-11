@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  om:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-x86-rhel8-om
+    container_name: ops
+    deploy:
+      resources:
+        limits:
+          cpus: '2.000'
+          memory: 6G
+        reservations:
+          cpus: '0.500'
+          memory: 4G
+    hostname: ops.om.internal
+    image: rhel8-om:0.0
+    networks:
+      main:
+        aliases:
+          - ops.alt.internal
+    privileged: true
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+      - "25999:25999"
+
+  n1:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-x86-rhel8-node
+    container_name: n1
+    deploy:
+      resources:
+        limits:
+          cpus: '1.000'
+          memory: 3G
+        reservations:
+          cpus: '0.500'
+          memory: 1G
+    hostname: n1.om.internal
+    image: rhel8-node:0.0
+    networks:
+      main:
+        aliases:
+          - n1.alt.internal
+    privileged: true
+    volumes:
+      - ./mongodb-mms:/etc/mongodb-mms:ro
+      - ./certs:/certs
+
+networks:
+  main:
