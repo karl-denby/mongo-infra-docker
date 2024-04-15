@@ -1,0 +1,24 @@
+FROM registry.access.redhat.com/ubi8/ubi-init
+
+COPY mongodb-enterprise.aarch64.rpm /root/mongodb-enterprise.aarch64.rpm
+COPY mongodb-mms.x86_64.rpm /root/mongodb-mms.x86_64.rpm
+
+# Install MongoDB and Ops Manager
+RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl xz-libs && \
+    dnf -y install net-tools && \
+    dnf clean all && \
+    rpm -U /root/mongodb-enterprise.aarch64.rpm && \
+    rpm -U /root/mongodb-mms.x86_64.rpm --no-arch && \
+    systemctl enable mongod && \
+    systemctl enable mongodb-mms && \
+    systemctl enable sshd && \
+    mkdir -p /head && \
+    chown mongodb-mms:mongodb-mms /head
+
+EXPOSE 8080
+EXPOSE 8443
+EXPOSE 27999
+
+STOPSIGNAL SIGRTMIN+3
+
+CMD [ "/sbin/init" ]
