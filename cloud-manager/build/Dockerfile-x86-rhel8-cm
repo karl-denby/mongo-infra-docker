@@ -1,11 +1,12 @@
 FROM registry.access.redhat.com/ubi8/ubi-init
 
+COPY mongodb-agent.x86_64.rpm /root/mongodb-agent.x86_64.rpm
+
 # Install httpd
 RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl xz-libs && \
     dnf clean all && \
     # Tell systemd to start httpd
-    curl -OL https://cloud.mongodb.com/download/agent/automation/mongodb-mms-automation-agent-manager-latest.aarch64.amzn2.rpm && \
-    dnf -y install mongodb-mms-automation-agent-manager-latest.aarch64.amzn2.rpm && \
+    dnf -y install /root/mongodb-agent.x86_64.rpm && \
     systemctl enable mongodb-mms-automation-agent.service && \
     systemctl enable sshd && \
     mkdir -p /data && \

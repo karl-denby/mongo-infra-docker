@@ -1,1 +1,0 @@
-This folder should be read only, adjust the file from the docker host and then stop/start the containers to apply it
