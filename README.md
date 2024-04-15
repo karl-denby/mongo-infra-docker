@@ -46,7 +46,7 @@ Ops Manager and 1x MongoDB Agent
 1. Take note of the `mmsGroupId=123412341234123412341234`,`mmsApiKey=123412341234123412341234123412341234123412341234123412341234123412341234` and `mmsBaseUrl=http://ops.om.internal:8080`values
 1. Update the file `./mongod-mms/automation-agent.config` with these values, it will be used by the node containers in the next step
 1. run this command `bash assets/x86_64_OM-7.0.4-agent.sh` to download the MongoDB agent to your host from your running Ops Manager container
-1. run this command to copy that agent into a container and let it connect to your Ops Manager `docker compose up -d n1`
+1. run this command to copy that agent into a container and let it connect to your Ops Manager `docker compose up -d n1om`
 1. After a couple of seconds go to **Deployment >> Agents >> Servers** and you'll see your server
 
 ## Hints and tips:
@@ -63,6 +63,6 @@ Ops Manager and 1x MongoDB Agent
 ---
 
 ## Changelog
-- 2024-04-15 Make CM act more like the OM container
+- 2024-04-15 Make CM act more like the OM container, change container names so you can run OM/CM agents at the same time with no clash
 - 2024-04-11 Initial x86_64 Ops Manager Proof of Concept aarch64 for Cloud Manager confirmed good on Windows/M-series mac
 - 2024-04-10 Initial x86_64 Cloud Manager Proof of Concept, with an untested version for aarch64

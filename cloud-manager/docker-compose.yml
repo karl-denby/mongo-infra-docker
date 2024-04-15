@@ -1,10 +1,10 @@
 version: "3.9"
 services:
-  n1:
+  n1cm:
     build:
       context: .
       dockerfile: ./build/Dockerfile-x86-rhel8-cm
-    container_name: n1
+    container_name: n1cm
     deploy:
       resources:
         limits:
@@ -13,22 +13,22 @@ services:
         reservations:
           cpus: '0.500'
           memory: 1G
-    hostname: n1.cm.internal
+    hostname: n1cm.cm.internal
     image: mongo-infra:0.1
     networks:
       main:
         aliases:
-          - n1.alt.internal
+          - n1cm.alt.internal
     privileged: true
     volumes:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
 
-  n2:
+  n2cm:
     build:
       context: .
       dockerfile: ./build/Dockerfile-x86-rhel8-cm
-    container_name: n2
+    container_name: n2cm
     deploy:
       resources:
         limits:
@@ -37,22 +37,22 @@ services:
         reservations:
           cpus: '0.500'
           memory: 1G
-    hostname: n2.cm.internal
+    hostname: n2cm.cm.internal
     image: mongo-infra:0.1
     networks:
       main:
         aliases:
-          - n2.alt.internal
+          - n2cm.alt.internal
     privileged: true
     volumes:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
 
-  n3:
+  n3cm:
     build:
       context: .
       dockerfile: ./build/Dockerfile-x86-rhel8-cm
-    container_name: n3
+    container_name: n3cm
     deploy:
       resources:
         limits:
@@ -61,7 +61,7 @@ services:
         reservations:
           cpus: '0.500'
           memory: 1G
-    hostname: n3.cm.internal
+    hostname: n3cm.cm.internal
     image: mongo-infra:0.1
     networks:
       main:
