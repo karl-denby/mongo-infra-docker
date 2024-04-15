@@ -25,11 +25,11 @@ services:
       - "8443:8443"
       - "25999:25999"
 
-  n1:
+  n1om:
     build:
       context: .
       dockerfile: ./build/Dockerfile-x86-rhel8-node
-    container_name: n1
+    container_name: n1om
     deploy:
       resources:
         limits:
@@ -38,7 +38,7 @@ services:
         reservations:
           cpus: '0.500'
           memory: 1G
-    hostname: n1.om.internal
+    hostname: n1om.om.internal
     image: rhel8-node:0.0
     networks:
       main:
