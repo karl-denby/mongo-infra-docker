@@ -3,7 +3,7 @@ services:
   n1cm:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86-rhel8-cm
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-cm
     container_name: n1cm
     deploy:
       resources:
@@ -27,7 +27,7 @@ services:
   n2cm:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86-rhel8-cm
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-cm
     container_name: n2cm
     deploy:
       resources:
@@ -51,7 +51,7 @@ services:
   n3cm:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86-rhel8-cm
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-cm
     container_name: n3cm
     deploy:
       resources:
