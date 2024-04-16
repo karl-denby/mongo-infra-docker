@@ -2,13 +2,19 @@
 
 Currently confirmed working/tested, others may work also but have not been verified.
 - [x] Cloud Manager MongoDB Agent for Mac M1/M2/M3
-- [ ] Cloud Manager MongoDB Agent for Mac Intel
+- [ ] Cloud Manager MongoDB Agent for Mac Intel*
 - [x] Cloud Manager MongoDB Agent for Windows x86_64 
-- [x] Cloud Manager MongoDB Agent for Linux x86_64 
+- [x] Cloud Manager MongoDB Agent for Linux x86_64
+- [x] Ops Manager for Mac M1/M2/M3
+- [ ] Ops Manager for Mac Intel/x86_64*
+- [ ] Ops Manager for Windows x86_64*
 - [x] Ops Manager for Linux x86_64
-- [x] Ops Manager for Linux aarch64
+- [x] Ops Manager MongoDB Agent for Mac M1/M2/M3
+- [x] Ops Manager MongoDB Agent for Mac Intel
+- [ ] Ops Manager MongoDB Agent for Windows x86_64*
 - [x] Ops Manager MongoDB Agent for Linux x86_64
-- [x] Ops Manager MongoDB Agent for Linux aarch64
+
+'*' should work but not tested
 
 ## Usage
 
@@ -18,13 +24,21 @@ Currently confirmed working/tested, others may work also but have not been verif
 
 1. Create a Cloud Manager project and grab the api key
     1. Create a Cloud Manager project on https://cloud.mongodb.com and go to **Deployment >> Agents >> Downloads & Settings >> Select your operating system**
-    1. Pick anything in the linux family and on the wizard that appears generate an API key
-    1. Take note of the vlues for 
-    `mmsGroupId=123412341234123412341234` and
+    2. Pick anything in the linux family and on the wizard that appears generate an API key
+    3. Take note of the values for
+    ``` 
+    `mmsGroupId=123412341234123412341234`
+
     `mmsApiKey=123412341234123412341234123412341234123412341234123412341234123412341234`
-    1. Update the file `cloud-manager/mongod-mms/automation-agent.config` with these values
-1. **Update the docker compose file, to select the right build file, either change x86_64 to aarch64 vice versa**
-1. `docker compose up -d` in the `cloud-manager` folder. This will build a container with the tools you need, and install and configure the MongoDB Agent (for Cloud Manager) to start with the container via systemd
+    ```
+    4. Update the file `cloud-manager/mongod-mms/automation-agent.config` with these values
+2. `cd cloud-manager` and run **only 1** of these download script for your architechture 
+```
+bash assets/aarch64_CM-agent.sh # if your are on M1/Aaarch64/ARM64
+bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
+```
+3. **Update the `cloud-manager/docker-compose.yml` file, to select the right build file, either change x86_64 to aarch64 or vice versa default is aarch64 (aka M1)**
+4. `docker compose up -d` this will build a container with the tools and dependencies you need, it will install and configure the MongoDB Agent (for Cloud Manager) that you downloaded in step 2, and connect it to the group you setup in step 1. The container has systemd and behaves like an operating system.
 
 ---
 
@@ -69,6 +83,7 @@ Ops Manager and 1x MongoDB Agent
 ---
 
 ## Changelog
+- 2024-04-16 Confirmed working on ARM/M1/Aaarch64, updated docs
 - 2024-04-15 Make CM act more like the OM container, change container names so you can run OM/CM agents at the same time with no clash
 - 2024-04-11 Initial x86_64 Ops Manager Proof of Concept aarch64 for Cloud Manager confirmed good on Windows/M-series mac
 - 2024-04-10 Initial x86_64 Cloud Manager Proof of Concept, with an untested version for aarch64
