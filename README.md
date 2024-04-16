@@ -6,7 +6,7 @@ Currently confirmed working/tested, others may work also but have not been verif
 - [x] Cloud Manager MongoDB Agent for Windows x86_64 
 - [x] Cloud Manager MongoDB Agent for Linux x86_64
 - [x] Ops Manager for Mac M1/M2/M3
-- [ ] Ops Manager for Mac Intel/x86_64*
+- [x] Ops Manager for Mac Intel/x86_64
 - [ ] Ops Manager for Windows x86_64*
 - [x] Ops Manager for Linux x86_64
 - [x] Ops Manager MongoDB Agent for Mac M1/M2/M3
@@ -54,7 +54,8 @@ Ops Manager and one MongoDB Agent
 
     bash assets/x86_64_OM-7.0.4.sh  # If you are on Intel
     ```
-2. Now build and start the Ops Manager container with `docker compose up -d om`
+2. **Optional: update the `ops-manager/docker-compose.yml` file, to select the right build file, the default is aarch64 for M1/ARM/Aarch64, you can change it to x86_64 for Intel Mac/Windows/Linux on line 6, 30, 54**
+3. Now build and start the Ops Manager container with `docker compose up -d om`
     1. Keep an eye on the startup, **it can take 10 minutes for it to be ready** `docker exec -it ops tail -f /opt/mongodb/mms/logs/mms0.log` to check activity
     1. When its ready (listening on 8080) you can log into `http://localhost:8080` and **Sign Up** the 1st user (global admin) 
     1. Set these options on the configuration screens
@@ -66,10 +67,10 @@ Ops Manager and one MongoDB Agent
     Transport: smtp
     SMTP Hostname: localhost
     SMTP Server Port: 25
-    Next, Next, Next, Continue
+    Continue, Continue, Continue, Continue, Continue
     ```
-3. One the project that appears go to **Deployment >> Agents >> Downloads & Settings >> Select any operating system**
-    1. On the wizard that appears generate an API key
+4. One the project that appears go to **Deployment >> Agents >> Downloads & Settings >> Select any operating system**
+    1. On the wizard that appears click **+Generate Key**
     1. Take note of the values for
     ```
     mmsGroupId=123412341234123412341234
@@ -79,29 +80,29 @@ Ops Manager and one MongoDB Agent
     mmsBaseUrl=http://ops.om.internal:8080
     ```
     1. Update the file `ops-manager/mongod-mms/automation-agent.config` with these values, it will be used by the node container in the next step
-4. `cd ops-manager` and run **only 1** of these download scripts to obtain the agent for your architechture from your Ops Manager
+5. `cd ops-manager` and run **only 1** of these download scripts to obtain the agent for your architechture from your Ops Manager
 ```
 bash assets/aarch64_OM-7.0.4-agent.sh # If you are on M1/ARM/Aarch64
 
 bash assets/x86_64_OM-7.0.4-agent.sh  # If you are on Intel
 ```
-5. Now build and start the MongoDB Agent container with `docker compose up -d n1om`. After a couple of seconds go to http://localhost:8080 and navigate to **Deployment >> Agents >> Servers** and you'll see your server, you can add a monitoring/backup agent and standalone/replica set/sharded cluster as you see fit
+6. Now build and start the MongoDB Agent container with `docker compose up -d n1om`. After a couple of seconds go to http://localhost:8080 and navigate to **Deployment >> Agents >> Servers** and you'll see your server, you can add a monitoring/backup agent and standalone/replica set/sharded cluster as you see fit
 
 ## Hints and tips:
 
-- You can add a Monitoring Agent and Backup on that same screen
-- The containers have a hostname like `n1.cm.internal`, they also have an alternate name if you want to use preferred hostnames `n1.alt.internal`
-- The containers have self-signed ssl certs available for use, the are in the `./certs` folder on your system and in the containers under `/certs`
-- To stop one container, example n2, you would run `docker compose stop n1`
-- To start one container, example n2, you would run `docker compose start n1` 
-- to get a shell on a container, example n2, you would run `docker exec -it n1 /bin/bash`
-- Memory limits are set in `docker-compose.yml` if you need to adjust them
-- `docker compose down` will stop **and delete** the containers (including the agent and data dir)
+- Stopping/Starting Ops Manager and Containers
+  - `docker compose stop` # will stop the contains from running
+  - `docker compose start` # will get them going again
+- Getting a Shell / SSH on the containers
+  - `docker exec -it ops /bin/bash` runs bash as root on the **ops** container
+  - `docker exec -it n1om /bin/bash` runs bash as root on the **n1om** container
+  - you can just look at the docker-compose.yml to see what each container is called, or you can see it in `docker ps`
+- TLS certificates (testing use only) are available, more details coming soon
 
 ---
 
 ## Changelog
-- 2024-04-16 Confirmed working on ARM/M1/Aaarch64, updated docs, 
+- 2024-04-16 Confirmed working on ARM/M1/Aaarch64, updated docs, set aarch64 as default as most users of this project (80%) are using M1's to run test environments
 - 2024-04-15 Make CM act more like the OM container, change container names so you can run OM/CM agents at the same time with no clash
 - 2024-04-11 Initial x86_64 Ops Manager Proof of Concept aarch64 for Cloud Manager confirmed good on Windows/M-series mac
 - 2024-04-10 Initial x86_64 Cloud Manager Proof of Concept, with an untested version for aarch64
