@@ -3,7 +3,7 @@ services:
   om:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86-rhel8-om
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-om
     container_name: ops
     deploy:
       resources:
@@ -28,7 +28,7 @@ services:
   n1om:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86-rhel8-node
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-node
     container_name: n1om
     deploy:
       resources:
