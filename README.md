@@ -1,8 +1,14 @@
 # mongo-infra-docker
 
-- Quick spin up of mongod and related software (Agents, ~~Connectors, Sync, CLIs, etc.~~)
-- Support Mac (M-series and Intel), Linux (x86_64 ~~and aarch64~~) and Windows (x86_64)
-- Provide items needed for typical scenario troubleshooting, host, nslookup, ping, jq, openssl
+Currently confirmed working/tested, others may work also but have not been verified.
+- [x] Cloud Manager MongoDB Agent for Mac M1/M2/M3
+- [ ] Cloud Manager MongoDB Agent for Mac Intel
+- [x] Cloud Manager MongoDB Agent for Windows x86_64 
+- [x] Cloud Manager MongoDB Agent for Linux x86_64 
+- [x] Ops Manager for Linux x86_64
+- [x] Ops Manager for Linux aarch64
+- [x] Ops Manager MongoDB Agent for Linux x86_64
+- [x] Ops Manager MongoDB Agent for Linux aarch64
 
 ## Usage
 
