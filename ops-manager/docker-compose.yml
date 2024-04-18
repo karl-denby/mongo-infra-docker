@@ -49,5 +49,17 @@ services:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
 
+  squid:
+    image: diouxx/squid
+    networks:
+      main:
+        aliases:
+          - squid.alt.internal
+    container_name: squid
+    hostname: squid.om.internal
+    ports:
+      - "3128:3128"
+    restart: always
+
 networks:
   main:

@@ -99,6 +99,7 @@ bash assets/x86_64_OM-7.0.4-agent.sh  # If you are on Intel
   - `docker exec -it n1om /bin/bash` runs bash as root on the **n1om** container
   - you can just look at the docker-compose.yml to see what each container is called, or you can see it in `docker ps`
 - TLS certificates (testing use only) are available, please see [Enable TLS](/ops-manager/docs/tls-for-ops-manager.md)
+- If you do `docker compose up -d squid` a proxy will run on `http://squid.om.internal:3128`
 
 ---
 
