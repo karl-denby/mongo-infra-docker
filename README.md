@@ -38,7 +38,8 @@ bash assets/aarch64_CM-agent.sh # if your are on M1/ARM/Aarch64
 bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 ```
 3. **Optional: update the `cloud-manager/docker-compose.yml` file, to select the right build file, the default is aarch64 for M1/ARM/Aarch64, you can change it to x86_64 for Intel Mac/Windows/Linux on line 6, 30, 54**
-4. `docker compose up -d` this will build three containers with all the tools and dependencies you need. It will install and configure the MongoDB Agent (for Cloud Manager) that you downloaded in step 2, and connect it to the group you setup in step 1. The container has systemd and behaves like an operating system and is visible in your Cloud Manager project under **Deployment >> Agents >> Servers**.
+4. `docker compose up -d n1cm n2cm n3cm` this will build three containers with all the tools and dependencies you need. It will install and configure the MongoDB Agent (for Cloud Manager) that you downloaded in step 2, and connect it to the group you setup in step 1. The container has systemd and behaves like an operating system and is visible in your Cloud Manager project under **Deployment >> Agents >> Servers**.
+5. **Optional: if you need more nodes you can run `docker compose up -d n4cm n5cm n6cm`, they will appear in the same project**
 
 ---
 
