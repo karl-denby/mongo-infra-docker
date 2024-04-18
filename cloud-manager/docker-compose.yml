@@ -66,7 +66,79 @@ services:
     networks:
       main:
         aliases:
-          - n3.alt.internal
+          - n3cm.alt.internal
+    privileged: true
+    volumes:
+      - ./mongodb-mms:/etc/mongodb-mms:ro
+      - ./certs:/certs
+
+  n4cm:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-cm
+    container_name: n4cm
+    deploy:
+      resources:
+        limits:
+          cpus: '1.000'
+          memory: 3G
+        reservations:
+          cpus: '0.500'
+          memory: 1G
+    hostname: n4cm.cm.internal
+    image: mongo-infra:0.1
+    networks:
+      main:
+        aliases:
+          - n4cm.alt.internal
+    privileged: true
+    volumes:
+      - ./mongodb-mms:/etc/mongodb-mms:ro
+      - ./certs:/certs
+
+  n5cm:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-cm
+    container_name: n5cm
+    deploy:
+      resources:
+        limits:
+          cpus: '1.000'
+          memory: 3G
+        reservations:
+          cpus: '0.500'
+          memory: 1G
+    hostname: n5cm.cm.internal
+    image: mongo-infra:0.1
+    networks:
+      main:
+        aliases:
+          - n5cm.alt.internal
+    privileged: true
+    volumes:
+      - ./mongodb-mms:/etc/mongodb-mms:ro
+      - ./certs:/certs
+
+  n6cm:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-cm
+    container_name: n6cm
+    deploy:
+      resources:
+        limits:
+          cpus: '1.000'
+          memory: 3G
+        reservations:
+          cpus: '0.500'
+          memory: 1G
+    hostname: n6cm.cm.internal
+    image: mongo-infra:0.1
+    networks:
+      main:
+        aliases:
+          - n6cm.alt.internal
     privileged: true
     volumes:
       - ./mongodb-mms:/etc/mongodb-mms:ro
