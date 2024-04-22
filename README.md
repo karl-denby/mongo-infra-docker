@@ -100,6 +100,11 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 
 5. **Optional: if you need more nodes you can run `docker compose up -d n4cm n5cm n6cm`, they will appear in the same project**
 
+=======
+
+- TLS certificates (testing use only) are available, please see [Enable TLS](/ops-manager/docs/tls-for-ops-manager.md)
+- If you do `docker compose up -d squid` a proxy will run on `http://squid.om.internal:3128`
+
 ---
 
 ## Changelog
