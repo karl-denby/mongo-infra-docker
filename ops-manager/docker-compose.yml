@@ -58,10 +58,10 @@ services:
       resources:
         limits:
           cpus: '0.500'
-          memory: 0.75G
+          memory: 0.50G
         reservations:
           cpus: '0.500'
-          memory: 0.75G
+          memory: 0.50G
     hostname: metadata.om.internal
     image: rhel8-node:0.0
     networks:
@@ -82,10 +82,10 @@ services:
       resources:
         limits:
           cpus: '0.500'
-          memory: 0.75G
+          memory: 0.50G
         reservations:
           cpus: '0.500'
-          memory: 0.75G
+          memory: 0.50G
     hostname: oplog.om.internal
     image: rhel8-node:0.0
     networks:
@@ -106,10 +106,10 @@ services:
       resources:
         limits:
           cpus: '0.500'
-          memory: 0.75G
+          memory: 0.50G
         reservations:
           cpus: '0.500'
-          memory: 0.75G
+          memory: 0.50G
     hostname: blockstore.om.internal
     image: rhel8-node:0.0
     networks:
@@ -132,10 +132,10 @@ services:
       resources:
         limits:
           cpus: '0.250'
-          memory: 0.5G
+          memory: 0.25G
         reservations:
           cpus: '0.250'
-          memory: 0.5G
+          memory: 0.25G
     hostname: proxy.om.internal
     ports:
       - "3128:3128"
@@ -154,10 +154,10 @@ services:
       resources:
         limits:
           cpus: '0.250'
-          memory: 0.5G
+          memory: 0.125G
         reservations:
           cpus: '0.250'
-          memory: 0.5G
+          memory: 0.125G
     ports: 
       - "80:80"
     restart: always
