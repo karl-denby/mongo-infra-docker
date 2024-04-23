@@ -58,6 +58,7 @@ Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM**
 ## Hints and tips:
 
 - Ops Manager needs 8G RAM to run reliably, an Agent 2.5G, so for Monitoring/Automation your looking at giving docker 10.5G
+- TLS certificates (testing use only) are available, please see [Enable TLS](/ops-manager/docs/tls-for-ops-manager.md) for more details
 - We also provide a couple of extra nodes called 
   - oplog (0.75G) `docker compose up -d oplog` (`oplog.om.internal`)
   - and blockstore (0.75G) `docker compose up -d blockstore` (`blockstore.om.internal`)
@@ -71,7 +72,7 @@ Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM**
   - `docker exec -it node1-om /bin/bash` runs bash as root on the **node1-om** container
   - you can just look at the docker-compose.yml to see what each container is called, or you can see it in `docker ps`
   - `docker stats` is a great way to see the cpu/memory usage and limits of each container 
-- TLS certificates (testing use only) are available, please see [Enable TLS](/ops-manager/docs/tls-for-ops-manager.md) for more details
+  - if you `cd extras` there are a couple of extra containers, one is a proxy (docker compose up -d proxy) on `proxy.om.interal` another is a load-balancer (docker compose up -d lb) on `lb.om.internal`
 
 ---
 
@@ -108,6 +109,7 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 ---
 
 ## Changelog
+- 2024-04-23 Added working nginx loadbalancer and squid proxy
 - 2024-04-22 Single command needed to do everything, added oplog/blockstores/metadata with resonable sizes
 - 2024-04-16 Confirmed working on ARM/M1/Aaarch64, updated docs, set aarch64 as default as most users of this project (80%) are using M1's to run test environments
 - 2024-04-15 Make CM act more like the OM container, change container names so you can run OM/CM agents at the same time with no clash

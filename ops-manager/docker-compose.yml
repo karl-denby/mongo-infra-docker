@@ -121,16 +121,45 @@ services:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
 
-  squid:
+  proxy:
     image: diouxx/squid
     networks:
       main:
         aliases:
-          - squid.alt.internal
-    container_name: squid
-    hostname: squid.om.internal
+          - proxy.alt.internal
+    container_name: proxy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.250'
+          memory: 0.5G
+        reservations:
+          cpus: '0.250'
+          memory: 0.5G
+    hostname: proxy.om.internal
     ports:
       - "3128:3128"
+    restart: always
+
+  lb:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-nginx-lb
+    networks:
+      main: 
+        aliases:
+         - lb.alt.internal
+    container_name: lb.om.internal
+    deploy:
+      resources:
+        limits:
+          cpus: '0.250'
+          memory: 0.5G
+        reservations:
+          cpus: '0.250'
+          memory: 0.5G
+    ports: 
+      - "80:80"
     restart: always
 
 networks:
