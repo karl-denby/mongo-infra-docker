@@ -1,6 +1,6 @@
 #!/bin/bash
 echo === Setting Docker build images to aarch64 ===
-sed -i 's/x86_64/aarch64/g' docker-compose.yml
+sed -i '' 's/x86_64/aarch64/g' docker-compose.yml
 
 echo === Downloading AppDB, Ops Manager and JDK ===
 curl -o mongodb-enterprise.aarch64.rpm -L https://repo.mongodb.com/yum/redhat/8/mongodb-enterprise/7.0/aarch64/RPMS/mongodb-enterprise-server-7.0.8-1.el8.aarch64.rpm
