@@ -26,7 +26,8 @@ Currently confirmed working/tested, others may work also but have not been verif
 
 Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM** if you want to do backup testing)
 
-1. Run `bash quick-start-intel.sh` or `bash quick-start-m1.sh` depending on what CPU type your system has
+1. On a Mac run `bash quick-start-mac-m1.sh` if you have an M1/M2/M3 or `bash quick-start-mac-intel.sh` if you have an Intel Mac
+1. If you are running linux or windows, presumably on amd64/X86_64 run `bash quick-start-other-intel.sh`
 
 2. The script will download, build and deploy Ops Manager then pause while it is configured, enter these settings:
     ```
