@@ -100,7 +100,7 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 ---
 
 ## Changelog
-- 2024-04-25 Set some defaults in conf-mms.properties so initial startup is faster, add smtp catcher
+- 2024-04-25 Set some defaults in conf-mms.properties so initial startup is faster, add smtp catcher, initial attempt at s3 support
 - 2024-04-23 Added working nginx loadbalancer and squid proxy
 - 2024-04-22 Single command needed to do everything, added oplog/blockstores/metadata with resonable sizes
 - 2024-04-16 Confirmed working on ARM/M1/Aaarch64, updated docs, set aarch64 as default as most users of this project (80%) are using M1's to run test environments
