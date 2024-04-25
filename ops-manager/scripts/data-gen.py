@@ -16,6 +16,7 @@ for i in range(100000):
         'email': fake.email(),
         'address': {'street': fake.street_address(), 'city': fake.city(), 'state': fake.state_abbr(), 'zip': fake.zipcode()},
         'phone': fake.phone_number(),
+        'padding': fake.random_letters(length=1024)
     }
     collection.insert_one(document)
 
