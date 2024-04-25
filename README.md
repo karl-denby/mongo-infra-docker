@@ -29,18 +29,7 @@ Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM**
 1. On a Mac run `bash quick-start-mac-m1.sh` if you have an M1/M2/M3 or `bash quick-start-mac-intel.sh` if you have an Intel Mac
 1. If you are running linux or windows, presumably on amd64/X86_64 run `bash quick-start-other-intel.sh`
 
-2. The script will download, build and deploy Ops Manager then pause while it is configured, enter these settings:
-    ```
-    URL To Access Ops Manager: http://ops.om.internal:8080
-    "From" Email Address: something@nowhere.com
-    "Reply To" Email Address: something@nowhere.com
-    Admin Email Address: something@nowhere.com
-    Transport: smtp
-    SMTP Hostname: localhost
-    SMTP Server Port: 25
-
-    Continue, Continue, Continue, Continue, Continue
-    ```
+2. The script will download, build and deploy Ops Manager, please click **Sign Up** and register your first user who will be the **Global Admin** then complete the Initial Setup screens (we have pre defined some values in conf-mms.properties, so you just need to click **Continue** until its done)
 
 3. Once the project appears go to **Deployment >> Agents >> Downloads & Settings >> Select any operating system**
     1. On the wizard that appears click **+Generate Key**
@@ -61,8 +50,9 @@ Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM**
 - Ops Manager needs 8G RAM to run reliably, an Agent 2.5G, so for Monitoring/Automation your looking at giving docker 10.5G
 - TLS certificates (testing use only) are available, please see [Enable TLS](/ops-manager/docs/tls-for-ops-manager.md) for more details
 - We also provide a couple of extra nodes called 
-  - oplog (0.75G) `docker compose up -d oplog` (`oplog.om.internal`)
-  - and blockstore (0.75G) `docker compose up -d blockstore` (`blockstore.om.internal`)
+  - oplog (0.75G) `docker compose up -d oplog` # it will be reachable at (`oplog.om.internal`)
+  - blockstore (0.75G) `docker compose up -d blockstore` # it will be reachable at (`blockstore.om.internal`)
+  - metadata (0.75G) `docker compose up -d metadata` # it will be reachable at (`metadata.om.internal`)
   - these are perfect for standalones as backup infrastucture (12G total RAM)
   - If you are providing your own S3 and need a metadata store you can use one of those or `docker compose up -d metadata` (`metadata.om.internal`)
 - Stopping/Starting Ops Manager and Containers
@@ -70,7 +60,7 @@ Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM**
   - `docker compose unpause` # will get them all going again 
 - Getting a Shell / SSH on the containers
   - `docker exec -it ops /bin/bash` runs bash as root on the **ops** container
-  - `docker exec -it node1-om /bin/bash` runs bash as root on the **node1-om** container
+  - `docker exec -it node1 /bin/bash` runs bash as root on the **node1** container
   - you can just look at the docker-compose.yml to see what each container is called, or you can see it in `docker ps`
   - `docker stats` is a great way to see the cpu/memory usage and limits of each container 
   - if you `cd extras` there are a couple of extra containers, one is a proxy (docker compose up -d proxy) on `proxy.om.interal` another is a load-balancer (docker compose up -d lb) on `lb.om.internal`
@@ -110,6 +100,7 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 ---
 
 ## Changelog
+- 2024-04-24 Set some defaults in conf-mms.properties so initial startup is faster
 - 2024-04-23 Added working nginx loadbalancer and squid proxy
 - 2024-04-22 Single command needed to do everything, added oplog/blockstores/metadata with resonable sizes
 - 2024-04-16 Confirmed working on ARM/M1/Aaarch64, updated docs, set aarch64 as default as most users of this project (80%) are using M1's to run test environments

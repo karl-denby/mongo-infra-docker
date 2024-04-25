@@ -14,10 +14,11 @@ services:
           cpus: '1.000'
           memory: 4G
     hostname: ops.om.internal
-    image: rhel8-om:0.0
     networks:
       main:
         aliases:
+          - ops
+          - ops.om.internal
           - ops.alt.internal
     privileged: true
     ports:
@@ -25,21 +26,20 @@ services:
       - "8443:8443"
       - "25999:25999"
 
-  node1-om:
+  node1:
     build:
       context: .
       dockerfile: ./build/Dockerfile-x86_64-rhel8-node
-    container_name: node1-om
+    container_name: node1
     deploy:
       resources:
         limits:
-          cpus: '1.000'
-          memory: 2G
+          cpus: '2.000'
+          memory: 2.5G
         reservations:
           cpus: '0.500'
           memory: 1G
     hostname: node1.om.internal
-    image: rhel8-node:0.0
     networks:
       main:
         aliases:
@@ -60,13 +60,14 @@ services:
           cpus: '0.500'
           memory: 0.50G
         reservations:
-          cpus: '0.500'
-          memory: 0.50G
+          cpus: '0.333'
+          memory: 0.333G
     hostname: metadata.om.internal
-    image: rhel8-node:0.0
     networks:
       main:
         aliases:
+          - metadata
+          - metadata.om.internal
           - metadata.alt.internal
     privileged: true
     volumes:
@@ -84,13 +85,14 @@ services:
           cpus: '0.500'
           memory: 0.50G
         reservations:
-          cpus: '0.500'
-          memory: 0.50G
+          cpus: '0.333'
+          memory: 0.33G
     hostname: oplog.om.internal
-    image: rhel8-node:0.0
     networks:
       main:
         aliases:
+          - oplog
+          - oplog.om.internal
           - oplog.alt.internal
     privileged: true
     volumes:
@@ -108,13 +110,14 @@ services:
           cpus: '0.500'
           memory: 0.50G
         reservations:
-          cpus: '0.500'
-          memory: 0.50G
+          cpus: '0.333'
+          memory: 0.33G
     hostname: blockstore.om.internal
-    image: rhel8-node:0.0
     networks:
       main:
         aliases:
+          - blockstore
+          - blockstore.om.internal
           - blockstore.alt.internal
     privileged: true
     volumes:
@@ -126,6 +129,8 @@ services:
     networks:
       main:
         aliases:
+          - proxy
+          - proxy.om.internal
           - proxy.alt.internal
     container_name: proxy
     deploy:
@@ -134,8 +139,8 @@ services:
           cpus: '0.250'
           memory: 0.25G
         reservations:
-          cpus: '0.250'
-          memory: 0.25G
+          cpus: '0.125'
+          memory: 0.125G
     hostname: proxy.om.internal
     ports:
       - "3128:3128"
@@ -148,19 +153,43 @@ services:
     networks:
       main: 
         aliases:
+         - lb
+         - lb.om.internal
          - lb.alt.internal
-    container_name: lb.om.internal
+    container_name: lb
     deploy:
       resources:
         limits:
           cpus: '0.250'
           memory: 0.125G
         reservations:
-          cpus: '0.250'
-          memory: 0.125G
+          cpus: '0.125'
+          memory: 0.062G
     ports: 
       - "80:80"
     restart: always
+
+  smtp:
+    image: dockage/mailcatcher:0.9.0
+    networks:
+      main: 
+        aliases:
+         - smtp
+         - smtp.om.internal
+         - smtp.alt.internal
+    container_name: smtp
+    deploy:
+      resources:
+        limits:
+          cpus: '0.250'
+          memory: 0.125G
+        reservations:
+          cpus: '0.125'
+          memory: 0.062G
+    ports: 
+      - "1025:1025"
+      - "1080:1080"
+    restart: on-failure
 
 networks:
   main:

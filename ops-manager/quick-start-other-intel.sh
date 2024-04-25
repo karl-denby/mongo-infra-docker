@@ -23,6 +23,6 @@ read -n 1 -p "Press Any Key to attempt Agent setup" mainmenuinput
 
 echo === Downloading Agent ===
 curl -o mongodb-agent.x86_64.rpm -L http://localhost:8080/download/agent/automation/mongodb-mms-automation-agent-manager-latest.x86_64.rhel8.rpm
-docker compose up -d node1-om
+docker compose up -d node1
 
 echo === Please check Ops Manager servers tab for your running agents ===
