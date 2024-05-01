@@ -203,7 +203,8 @@ services:
         aliases:
          - s3
          - s3.om.internal
-         - s3.alt.internal
+         - oplog.s3.om.internal
+         - blockstore.s3.om.internal
     container_name: s3
     deploy:
       resources:
