@@ -19,7 +19,15 @@ RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi 
     systemctl enable mongodb-mms && \
     systemctl enable sshd && \
     mkdir -p /head && \
-    chown mongodb-mms:mongodb-mms /head
+    chown mongodb-mms:mongodb-mms /head && \
+    echo "mms.centralUrl=http://ops.om.internal:8080" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
+    echo "mms.fromEmailAddr=no@email.com" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
+    echo "mms.replyToEmailAddr=no@email.com" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
+    echo "mms.adminEmailAddr=no@email.com" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
+    echo "mms.mail.transport=smtp" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
+    echo "mms.mail.hostname=smtp.om.internal" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
+    echo "mms.mail.port=1025" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
+    echo "mms.emailDaoClass=SIMPLE_MAILER" >> /opt/mongodb/mms/conf/conf-mms.properties 
 
 EXPOSE 8080
 EXPOSE 8443
