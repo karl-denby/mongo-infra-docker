@@ -191,5 +191,35 @@ services:
       - "1080:1080"
     restart: on-failure
 
+  s3:
+    image: dxflrs/garage:v1.0.0
+    restart: unless-stopped
+    volumes:
+      - ./garage/garage.toml:/etc/garage.toml
+      - ./garage/meta:/var/lib/garage/meta
+      - ./garage/data:/var/lib/garage/data
+    networks:
+      main:
+        aliases:
+         - s3
+         - s3.om.internal
+         - oplog.s3.om.internal
+         - blockstore.s3.om.internal
+    container_name: s3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.500'
+          memory: 0.250G
+        reservations:
+          cpus: '0.250'
+          memory: 0.250G
+    ports:
+      - "3900:3900"
+      - "3901:3901"
+      - "3902:3902"
+      - "3903:3903"
+      - "3904:3904"
+
 networks:
   main:

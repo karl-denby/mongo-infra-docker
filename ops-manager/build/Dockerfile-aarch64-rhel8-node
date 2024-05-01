@@ -1,6 +1,7 @@
 FROM registry.access.redhat.com/ubi8/ubi-init
 
 COPY mongodb-agent.aarch64.rpm /root/mongodb-agent.aarch64.rpm
+COPY scripts/data-gen.py /root/data-gen.py
 
 # Install an automation agent and all dependecies
 RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl xz-libs && \
@@ -11,6 +12,9 @@ RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi 
     mkdir -p /data && \
     chown mongod:mongod /data
     
+RUN dnf install python3 && \
+    pip3 install pymongo faker
+
 STOPSIGNAL SIGRTMIN+3
 
 CMD [ "/sbin/init" ]

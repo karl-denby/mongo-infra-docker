@@ -1,0 +1,28 @@
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+db_engine = "lmdb"
+metadata_auto_snapshot_interval = "6h"
+
+replication_factor = 1
+
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "s3.om.internal:3901"
+rpc_secret = "a8d12a52faf0178a082e4098bcb9cccc83888c8c158ce2476d163d388d6d9a63"
+
+[s3_api]
+s3_region = "docker"
+api_bind_addr = "[::]:3900"
+root_domain = ".s3.om.internal"
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".web.om.internal"
+index = "index.html"
+
+[k2v_api]
+api_bind_addr = "[::]:3904"
+
+[admin]
+api_bind_addr = "[::]:3903"
+admin_token = "DPYlE/kc6ZAOnSuwNmfYDxCtXENl81QFjDGjQTb+LMA="
+metrics_token = "I4Eryg3kPZ/LD2ttEoIFqviS4DgMMVxCAlBa7VWcvYg="
