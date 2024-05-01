@@ -136,6 +136,7 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 ---
 
 ## Changelog
+- 2024-05-01 Initial run at a simplified s3 setup
 - 2024-04-25 Set some defaults in conf-mms.properties so initial startup is faster, add smtp catcher, initial attempt at s3 support
 - 2024-04-23 Added working nginx loadbalancer and squid proxy
 - 2024-04-22 Single command needed to do everything, added oplog/blockstores/metadata with resonable sizes
