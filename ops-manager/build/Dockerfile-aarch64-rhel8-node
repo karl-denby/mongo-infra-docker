@@ -12,7 +12,7 @@ RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi 
     mkdir -p /data && \
     chown mongod:mongod /data
     
-RUN dnf install python3 && \
+RUN dnf -y install python3 && \
     pip3 install pymongo faker
 
 STOPSIGNAL SIGRTMIN+3
