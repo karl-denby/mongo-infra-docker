@@ -2,32 +2,34 @@
 
 **Get an Ops Manager (or Cloud Manager) environment up and running on your Mac (M1/Intel) or PC (Windows/Linux) with a single command. Batteries included.**
 
----
+## Features
 
-| Feature | Supported | Disabled | Notes |
-| --- | --- | --- | --- |
-| Ops Manager | :heavy_check_mark: | - | - |
-| Cloud Manager |  :heavy_check_mark: |  - | If you have low RAM, consider this instead of Ops Manager |
-| MongoDB Agent | :heavy_check_mark: | - | - |
-| Blockstore Backup | :heavy_check_mark: | - | - |
-| S3 Backup | :heavy_check_mark: | - | - |
-| File Backup | - | :x: | - |
-| Snapshot Restore | :heavy_check_mark: | - | - |
-| PIT Restore | :heavy_check_mark: | - | - |
-| Queryable Restore | - | :x: | Needs a certificate created on x86_64. Shouldn't work on M1/ARM (wrong binary) |
-| Load-balancer | :heavy_check_mark: | - | Balancer in front of single Ops Manager |
-| Proxy | :heavy_check_mark: | - |  |
-| SMTP | :heavy_check_mark: | - | - |
-| Prometeus | - | :x: | Not included yet |
-| LDAP | - | :x: | Not included yet |
-| Kerberos | - | :x: | Not included yet |
-| KMIP | - | :x: | Not included yet |
+| Feature | Supported | Notes |
+| --- | --- | --- |
+| Ops Manager | :heavy_check_mark: | - |
+| Cloud Manager |  :heavy_check_mark: | If you have low RAM, consider this instead of Ops Manager |
+| MongoDB Agent | :heavy_check_mark: | - |
+| Blockstore Backup | :heavy_check_mark: | - |
+| S3 Backup | :heavy_check_mark: | [S3 Backup](/ops-manager/docs/BACKUP.md) |
+| File Backup | :x: | - |
+| Snapshot Restore | :heavy_check_mark: | - |
+| PIT Restore | :heavy_check_mark: | - |
+| Queryable Restore | :x: | Needs a certificate created on x86_64. Shouldn't work on M1/ARM (wrong binary) |
 
----
+For more complex tests the following have been included already. Nothing is stopping you using your own also, these will  be added based on demand.
+
+| Optional Extras | Supported | Notes |
+| --- | --- | --- |
+| TLS Certificates | :heavy_check_mark: | For Deployments see [Enable TLS](/ops-manager/docs/tls-for-ops-manager.md) |
+| Load-balancer | :heavy_check_mark: | Balancer in front of single Ops Manager |
+| Proxy | :heavy_check_mark: | Squid running on port proxy.om.internal:3128 |
+| SMTP | :heavy_check_mark: | - |
+| Prometeus | :x: | Not included yet |
+| LDAP | :x: | Not included yet |
+| Kerberos | :x: | Not included yet |
+| KMIP | :x: | Not included yet |
 
 ## Usage
-
-![](ops-manager/docs/images/Example.png)
 
 **Example 1:** 
 
@@ -52,49 +54,19 @@ Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM o
 
 4. Press any key to unpause the script, it will download an Agent and start up a container with it running inside that is connected to the Ops Manager you deployed earlier, your environment is setup.
 
-5. **Optional:** If you want a proxy you can run `docker compose up -d proxy`, it will be available on http://proxy.om.internal:3128 and can work with http or https. View container logs if you want to see what is using the proxy. It is allocated around 125mb of Memory.
+5. **Optional:** If you want an oplog store and block store for backup testing run `docker compose up -d oplog blockstore` they will be added to the same project, then you can use the OM ui to install standalones, then move to the Admin UI and configure them as backup targets. If you setup TLS in the project, I'd recommend setting TLS for metadata to AllowTLS so that you don't have to mess with the OM keystore (unless that is what you are testing)
 
-6. **Optional:** If you want a load-balancer run `docker compose up -d lb`, it will be availble on http://lb.om.internal and you should set your Ops Manager Central URL to this and set `X-forwarded-for`. It uses about 125mb of Memory.
+6. **Optional:** If you want a proxy you can run `docker compose up -d proxy`, it will be available on http://proxy.om.internal:3128 and can work with http or https. View container logs if you want to see what is using the proxy. It is allocated around 125mb of Memory.
 
-7. **Optional:** If you want to see emails sent by Ops Manager run `docker compose up -d smtp` you can then go to http://localhost:1080 to see a webui and all the emails set to `smtp.om.internal:1025` it only captures while its running, so it won't show you emails from before it ran, but if you need to do email resets or check invites/alerts. It uses about 125mb of Memory.
+7. **Optional:** If you want a load-balancer run `docker compose up -d lb`, it will be availble on http://lb.om.internal and you should set your Ops Manager Central URL to this and set `X-forwarded-for`. It uses about 125mb of Memory.
 
-**Backup:**
-- If you want an oplog store and block store for backup testing run `docker compose up -d oplog blockstore` they will be added to the same project, then you can use the OM ui to install standalones, then move to the Admin UI and configure them as backup targets. If you setup TLS in the project, I'd recommend setting TLS for metadata to AllowTLS so that you don't have to mess with the OM keystore (unless that is what you are testing)
-- If you want to setup S3 you can do `docker compose up -d metadata` you'll need this for metadata obviously and also an actual S3 endpoint, to get that going do the following
-  - Add a standalone to `metadata.om.intnernal` via the OM UI/API and confirm it is running
-  - Start garage/s3 with `docker compose up -d s3`
-  - It has a layout of a single node, no mirroring
-  - It has 2 buckets, `oplog.s3.om.internal` and `blockstore.s3.om.internal`
-  - ops-manager-backup (name of the key)
-    - key id is `GK187d76754d8750c5fbbc8caf`
-    - secret id is `2fb9bae487f80d70b8f93f80e1e3deeff978e76ae3625d4bae932f1fbf969358`
-  - It has RWO permissions on the `oplog` and `blockstore` buckets
-  - Go to **Admin >> Backup**
-  - Enter `/head` and hit **Set**, then **Enable Daemon**
-  - Click **Configure A S3 Blockstore**
-  - Click **Advanced Setup** at the bottom (needed for region) then **Create New S3 Blockstore or Oplog**
-  - Name = blockstore (or oplog if you selected S3 Oplog)
-  - S3 Bucket Name = blockstore (or oplog)
-  - Region override = docker
-  - S3 Endpoint = http://s3.om.internal:3900
-  - S3 Max Connections = 50
-  - Path Style Access = Off
-  - Server Side Encryption = On
-  - S3 Autorization Method = Keys
-  - AWS Access Key = GK187d76754d8750c5fbbc8caf
-  - AWS Secret Key = 2fb9bae487f80d70b8f93f80e1e3deeff978e76ae3625d4bae932f1fbf969358
-  - Datastore Type = Standalone
-  - MongoDB Hostname = metadata.om.internal
-  - MongoDB Port = 27017
-  - Username = (If you enabled auth on the project enter your user otherwise blank)
-  - Password = (If you enabled auth on the project enter your user otherwise blank)
-  - Connection Options =
-  - Encrypt Credentials = off
-  - Use TLS/SSL = if you enabled TLS in the project set this, default off
-  - New assignment Enabled = on
-  - Disable proxy settings = off
-  - Acknowledge = on
-  - Hit Create and if everything was entered correctly, the metadata and s3 containers are running, it should complete. 
+8. **Optional:** If you want to see emails sent by Ops Manager run `docker compose up -d smtp` you can then go to http://localhost:1080 to see a webui and all the emails set to `smtp.om.internal:1025` it only captures while its running, so it won't show you emails from before it ran, but if you need to do email resets or check invites/alerts. It uses about 125mb of Memory.
+
+### Result
+
+If you followed steps 1 - 6 you should have something like this within 10 minutes:
+
+![](ops-manager/docs/images/Example.png)
 
 ## Hints and tips:
 
@@ -109,8 +81,6 @@ Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM o
   - you can just look at the docker-compose.yml to see what each container is called, or you can see it in `docker ps`
   - `docker stats` is a great way to see the cpu/memory usage and limits of each container 
  
----
-
 **Example 2:** 
 
 3x MongoDB Agents for Cloud Manager (with systemd)
@@ -136,13 +106,13 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 
 5. **Optional:** if you need more nodes you can run `docker compose up -d n4cm n5cm n6cm`, they will appear in the same project. Each uses about 2.5GB of Memory.
 
-=======
 
-- TLS certificates (testing use only) are available, please see [Enable TLS](/ops-manager/docs/tls-for-ops-manager.md)
+## Disclaimer
 
----
+This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under any of their commercial support subscriptions or otherwise. Any usage of this tool is at your own risk. It's intended only to serve as a test and environment.
 
 ## Changelog
+- 2024-05-03 Added disclaimer and feature tables to README.md
 - 2024-05-01 Initial run at a simplified s3 setup
 - 2024-04-25 Set some defaults in conf-mms.properties so initial startup is faster, add smtp catcher, initial attempt at s3 support
 - 2024-04-23 Added working nginx loadbalancer and squid proxy
