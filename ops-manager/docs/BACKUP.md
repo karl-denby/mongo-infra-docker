@@ -1,0 +1,36 @@
+# S3 Backup
+- If you want to setup S3 you can do `docker compose up -d metadata` you'll need this for metadata obviously and also an actual S3 endpoint, to get that going do the following
+  - Add a standalone to `metadata.om.intnernal` via the OM UI/API and confirm it is running
+  - Start garage/s3 with `docker compose up -d s3`
+  - It has a layout of a single node, no mirroring
+  - It has 2 buckets, `oplog.s3.om.internal` and `blockstore.s3.om.internal`
+  - ops-manager-backup (name of the key)
+    - key id is `GK187d76754d8750c5fbbc8caf`
+    - secret id is `2fb9bae487f80d70b8f93f80e1e3deeff978e76ae3625d4bae932f1fbf969358`
+  - It has RWO permissions on the `oplog` and `blockstore` buckets
+  - Go to **Admin >> Backup**
+  - Enter `/head` and hit **Set**, then **Enable Daemon**
+  - Click **Configure A S3 Blockstore**
+  - Click **Advanced Setup** at the bottom (needed for region) then **Create New S3 Blockstore or Oplog**
+  - Name = blockstore (or oplog if you selected S3 Oplog)
+  - S3 Bucket Name = blockstore (or oplog)
+  - Region override = docker
+  - S3 Endpoint = http://s3.om.internal:3900
+  - S3 Max Connections = 50
+  - Path Style Access = Off
+  - Server Side Encryption = On
+  - S3 Autorization Method = Keys
+  - AWS Access Key = GK187d76754d8750c5fbbc8caf
+  - AWS Secret Key = 2fb9bae487f80d70b8f93f80e1e3deeff978e76ae3625d4bae932f1fbf969358
+  - Datastore Type = Standalone
+  - MongoDB Hostname = metadata.om.internal
+  - MongoDB Port = 27017
+  - Username = (If you enabled auth on the project enter your user otherwise blank)
+  - Password = (If you enabled auth on the project enter your user otherwise blank)
+  - Connection Options =
+  - Encrypt Credentials = off
+  - Use TLS/SSL = if you enabled TLS in the project set this, default off
+  - New assignment Enabled = on
+  - Disable proxy settings = off
+  - Acknowledge = on
+  - Hit Create and if everything was entered correctly, the metadata and s3 containers are running, it should complete. 
