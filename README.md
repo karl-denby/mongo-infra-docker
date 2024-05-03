@@ -1,20 +1,27 @@
 # mongo-infra-docker
 
-Currently confirmed working/tested, others may work also but have not been verified.
-- [x] Cloud Manager MongoDB Agent for Mac M1/M2/M3
-- [ ] Cloud Manager MongoDB Agent for Mac Intel*
-- [x] Cloud Manager MongoDB Agent for Windows x86_64 
-- [x] Cloud Manager MongoDB Agent for Linux x86_64
-- [x] Ops Manager for Mac M1/M2/M3
-- [x] Ops Manager for Mac Intel/x86_64
-- [ ] Ops Manager for Windows x86_64*
-- [x] Ops Manager for Linux x86_64
-- [x] Ops Manager MongoDB Agent for Mac M1/M2/M3
-- [x] Ops Manager MongoDB Agent for Mac Intel
-- [ ] Ops Manager MongoDB Agent for Windows x86_64*
-- [x] Ops Manager MongoDB Agent for Linux x86_64
+**Get an Ops Manager (or Cloud Manager) environment up and running on your Mac (M1/Intel) or PC (Windows/Linux) with a single command. Batteries included.**
 
-'*' should work but not tested
+---
+
+| Feature | Supported | Disabled | Notes |
+| --- | --- | --- | --- |
+| Ops Manager | :heavy_check_mark: | - | - |
+| Cloud Manager |  :heavy_check_mark: |  - | If you have low RAM, consider this instead of Ops Manager |
+| MongoDB Agent | :heavy_check_mark: | - | - |
+| Blockstore Backup | :heavy_check_mark: | - | - |
+| S3 Backup | :heavy_check_mark: | - | - |
+| File Backup | - | :x: | - |
+| Snapshot Restore | :heavy_check_mark: | - | - |
+| PIT Restore | :heavy_check_mark: | - | - |
+| Queryable Restore | - | :x: | Needs a certificate created on x86_64. Shouldn't work on M1/ARM (wrong binary) |
+| Load-balancer | :heavy_check_mark: | - | Balancer in front of single Ops Manager |
+| Proxy | :heavy_check_mark: | - |  |
+| SMTP | :heavy_check_mark: | - | - |
+| Prometeus | - | :x: | Not included yet |
+| LDAP | - | :x: | Not included yet |
+| Kerberos | - | :x: | Not included yet |
+| KMIP | - | :x: | Not included yet |
 
 ---
 
