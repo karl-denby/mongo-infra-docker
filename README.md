@@ -6,8 +6,8 @@
 
 | Feature | Supported | Notes |
 | --- | --- | --- |
-| Ops Manager | :heavy_check_mark: | - |
-| Cloud Manager |  :heavy_check_mark: | If you have low RAM, consider this instead of Ops Manager |
+| Ops Manager | :heavy_check_mark: | `cd ops-manager` |
+| Cloud Manager |  :heavy_check_mark: | `cd cloud-manager` If you have low RAM, consider this instead of Ops Manager |
 | MongoDB Agent | :heavy_check_mark: | - |
 | Blockstore Backup | :heavy_check_mark: | - |
 | S3 Backup | :heavy_check_mark: | [S3 Backup](/ops-manager/docs/BACKUP.md) |
@@ -112,6 +112,7 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under any of their commercial support subscriptions or otherwise. Any usage of this tool is at your own risk. It's intended only to serve as a test and environment.
 
 ## Changelog
+- 2024-05-07 Added a single script with menu to select platform/arch
 - 2024-05-03 Added disclaimer and feature tables to README.md
 - 2024-05-01 Initial run at a simplified s3 setup
 - 2024-04-25 Set some defaults in conf-mms.properties so initial startup is faster, add smtp catcher, initial attempt at s3 support
@@ -121,3 +122,5 @@ This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under 
 - 2024-04-15 Make CM act more like the OM container, change container names so you can run OM/CM agents at the same time with no clash
 - 2024-04-11 Initial x86_64 Ops Manager Proof of Concept aarch64 for Cloud Manager confirmed good on Windows/M-series mac
 - 2024-04-10 Initial x86_64 Cloud Manager Proof of Concept, with an untested version for aarch64
+
+Copyright 2024 Karl Denby

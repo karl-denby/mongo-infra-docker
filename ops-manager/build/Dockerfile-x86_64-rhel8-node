@@ -14,6 +14,9 @@ RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi 
 RUN dnf -y install python3 && \
     pip3 install pymongo faker
 
+RUN mkdir -p /var/run/mongodb/ && \
+    touch /var/run/mongodb/mongod.pid
+
 STOPSIGNAL SIGRTMIN+3
 
 CMD [ "/sbin/init" ]

@@ -9,13 +9,13 @@ RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi 
     dnf -y install net-tools && \
     dnf clean all && \
     rpm -U /root/mongodb-enterprise.aarch64.rpm && \
-    rpm -U /root/mongodb-mms.x86_64.rpm --ignorearch && \
-    mv /opt/mongodb/mms/jdk /opt/mongodb/mms/jdk.old && \
-    mv /opt/mongodb/mms/jdk.aarch64.tar.gz /opt/mongodb/mms/jdk.tar.gz && \
-    cd /opt/mongodb/mms/  && \
-    tar -xzf jdk.tar.gz  && \
-    mv jdk-17.0.10+7 jdk && \
-    systemctl enable mongod && \
+    rpm -U /root/mongodb-mms.x86_64.rpm --ignorearch
+
+RUN rm -fr /opt/mongodb/mms/jdk && \
+    mkdir -p /opt/mongodb/mms/jdk && \
+    tar -xzf /opt/mongodb/mms/jdk.aarch64.tar.gz -C /opt/mongodb/mms/jdk --strip-components=1
+
+RUN systemctl enable mongod && \
     systemctl enable mongodb-mms && \
     systemctl enable sshd && \
     mkdir -p /head && \
