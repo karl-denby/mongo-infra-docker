@@ -112,6 +112,7 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under any of their commercial support subscriptions or otherwise. Any usage of this tool is at your own risk. It's intended only to serve as a test and environment.
 
 ## Changelog
+- 2024-05-07 Added a single script with menu to select platform/arch
 - 2024-05-03 Added disclaimer and feature tables to README.md
 - 2024-05-01 Initial run at a simplified s3 setup
 - 2024-04-25 Set some defaults in conf-mms.properties so initial startup is faster, add smtp catcher, initial attempt at s3 support
