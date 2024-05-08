@@ -122,3 +122,5 @@ This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under 
 - 2024-04-15 Make CM act more like the OM container, change container names so you can run OM/CM agents at the same time with no clash
 - 2024-04-11 Initial x86_64 Ops Manager Proof of Concept aarch64 for Cloud Manager confirmed good on Windows/M-series mac
 - 2024-04-10 Initial x86_64 Cloud Manager Proof of Concept, with an untested version for aarch64
+
+Copyright 2024 Karl Denby
