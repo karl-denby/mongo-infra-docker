@@ -36,8 +36,7 @@ For more complex tests the following have been included already. Nothing is stop
 
 Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM or more...** ...if you want to do backup testing)
 
-1. On a Mac run `bash quick-start-mac-m1.sh` if you have an M1/M2/M3 or `bash quick-start-mac-intel.sh` if you have an Intel Mac
-1. If you are running linux or windows, presumably on amd64/X86_64 run `bash quick-start-other-intel.sh`
+1. bash quick-start.sh` if you have an Intel Mac
 
 2. The script will download, build and deploy Ops Manager, please click **Sign Up** and register your first user who will be the **Global Admin** then complete the Initial Setup screens (we have pre defined some values in conf-mms.properties, so you just need to click **Continue** until its done)
 
