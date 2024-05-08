@@ -6,8 +6,8 @@
 
 | Feature | Supported | Notes |
 | --- | --- | --- |
-| Ops Manager | :heavy_check_mark: | - |
-| Cloud Manager |  :heavy_check_mark: | If you have low RAM, consider this instead of Ops Manager |
+| Ops Manager | :heavy_check_mark: | `cd ops-manager` |
+| Cloud Manager |  :heavy_check_mark: | `cd cloud-manager` If you have low RAM, consider this instead of Ops Manager |
 | MongoDB Agent | :heavy_check_mark: | - |
 | Blockstore Backup | :heavy_check_mark: | - |
 | S3 Backup | :heavy_check_mark: | [S3 Backup](/ops-manager/docs/BACKUP.md) |
