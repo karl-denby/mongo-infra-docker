@@ -1,0 +1,76 @@
+version: '3.9'
+    
+services:
+  mongod-local:
+    image: docker.io/mongodb/mongodb-enterprise-server:7.0-ubi8
+    container_name: mongod-local
+    hostname: mongod-local
+    configs:
+      - source: keyfile
+        target: /keyfile
+        uid: "997"
+        gid: "996"
+        mode: 0400
+    networks:
+      local:
+        aliases:
+          - mongod
+    restart: always
+    ports:
+      - 27778:27017
+    environment:
+      DB_PATH: "/data/db"
+      MONGODB_INITDB_ROOT_USERNAME: root
+      MONGODB_INITDB_ROOT_PASSWORD: MzY0MzYyNmMtMjFkZS00Y2Q4LWEyNzQtNzVmZDdjOWU3NjA5
+      MAXCONNS: 32200
+      REPLSETNAME: rs-localdev
+      MONGOTHOST: mongot-local:27027
+      KEYFILECONTENTS: MzY0MzYyNmMtMjFkZS00Y2Q4LWEyNzQtNzVmZDdjOWU3NjA5
+      KEYFILE: "/data/configdb/keyfile"
+      HOSTNAME: mongod-local
+    volumes:
+      - db:/data/db
+      - configdb:/data/configdb
+    command: [ 
+      "--setParameter", "authenticationMechanisms=SCRAM-SHA-1,SCRAM-SHA-256",
+      "--setParameter", "mongotHost=mongot-local:27027",
+      "--setParameter", "searchIndexManagementHostAndPort=mongot-local:27027",
+      "--keyFile", "/keyfile",
+      "--replSet", "rs-localdev"
+    ]
+
+  mongot-local:
+    image: docker.io/mongodb/mongodb-atlas-search:preview
+    container_name: mongot-local
+    hostname: mongot-local
+    networks:
+      local:
+        aliases:
+          - mongot
+    restart: always
+    environment:
+      MONGOD_HOST_AND_PORT: mongod-local:27017
+      KEYFILECONTENTS: MzY0MzYyNmMtMjFkZS00Y2Q4LWEyNzQtNzVmZDdjOWU3NjA5
+      HOSTNAME: mongot-local
+    volumes:
+      - mongot:/var/lib/mongot
+      - metrics:/var/lib/mongot-metrics
+    configs:
+      - source: keyfile
+        target: /var/lib/mongot/keyfile
+        uid: "1"
+        gid: "1"
+        mode: 0400
+
+configs:
+  keyfile:
+    content: MzY0MzYyNmMtMjFkZS00Y2Q4LWEyNzQtNzVmZDdjOWU3NjA5
+
+volumes:
+  configdb:
+  db:
+  mongot:
+  metrics:
+
+networks:
+  local:
