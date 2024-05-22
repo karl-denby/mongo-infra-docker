@@ -19,7 +19,9 @@ RUN systemctl enable mongod && \
     systemctl enable mongodb-mms && \
     systemctl enable sshd && \
     mkdir -p /head && \
+    mkdir -p /filesystem && \
     chown mongodb-mms:mongodb-mms /head && \
+    chown mongodb-mms:mongodb-mms /filesystem && \  
     echo "mms.centralUrl=http://ops.om.internal:8080" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
     echo "mms.fromEmailAddr=no@email.com" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
     echo "mms.replyToEmailAddr=no@email.com" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 

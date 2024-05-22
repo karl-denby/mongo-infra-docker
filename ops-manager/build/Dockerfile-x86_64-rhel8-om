@@ -3,6 +3,7 @@ FROM registry.access.redhat.com/ubi8/ubi-init
 COPY mongodb-enterprise.x86_64.rpm /root/mongodb-enterprise.x86_64.rpm
 COPY mongodb-mms.x86_64.rpm /root/mongodb-mms.x86_64.rpm
 
+
 # Install MongoDB and Ops Manager
 RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl xz-libs && \
     dnf -y install net-tools && \
@@ -14,6 +15,8 @@ RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi 
     systemctl enable sshd && \
     mkdir -p /head && \
     chown mongodb-mms:mongodb-mms /head && \
+    mkdir -p /filesystem && \
+    chown mongodb-mms:mongodb-mms /filesystem  && \
     echo "mms.centralUrl=http://ops.om.internal:8080" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
     echo "mms.fromEmailAddr=no@email.com" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
     echo "mms.replyToEmailAddr=no@email.com" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 

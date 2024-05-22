@@ -12,7 +12,7 @@
 | BI Connector | :heavy_check_mark: | Check OM Release notes for RHEL8 x86/ARM support |
 | Blockstore Backup | :heavy_check_mark: | - |
 | S3 Backup | :heavy_check_mark: | [S3 Backup](/ops-manager/docs/BACKUP.md) |
-| File Backup | :x: | - |
+| File Backup | :heavy_check_mark: | use `/filesystem` in Ops Manager |
 | Snapshot Restore | :heavy_check_mark: | - |
 | PIT Restore | :heavy_check_mark: | - |
 | Queryable Restore | :x: | Needs a certificate created on x86_64. Shouldn't work on M1/ARM (wrong binary) |
@@ -23,8 +23,8 @@ For more complex tests the following have been included already. Nothing is stop
 | --- | --- | --- |
 | TLS Certificates | :heavy_check_mark: | For Deployments see [Enable TLS](/ops-manager/docs/tls-for-ops-manager.md) |
 | Load-balancer | :heavy_check_mark: | Balancer in front of single Ops Manager |
-| Proxy | :heavy_check_mark: | Squid running on port proxy.om.internal:3128 |
-| SMTP | :heavy_check_mark: | - |
+| Proxy | :heavy_check_mark: | Squid running on port `proxy.om.internal:3128` |
+| SMTP | :heavy_check_mark: | `smtp.om.internal` on 1025, web viewer in 1080 |
 | Prometeus | :x: | Not included yet |
 | LDAP | :x: | Not included yet |
 | Kerberos | :x: | Not included yet |
@@ -112,7 +112,7 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under any of their commercial support subscriptions or otherwise. Any usage of this tool is at your own risk. It's intended only to serve as a test and environment.
 
 ## Changelog
-- 2024-05-20 Atlas Local testing complete on M1, update from 7.0.5 to 7.0.6
+- 2024-05-20 Atlas Local testing complete on M1, update from 7.0.5 to 7.0.6, BIC, filesystem backup
 - 2024-05-10 Added Atlas Local on Docker Compose (not podman)
 - 2024-05-07 Added a single script with menu to select platform/arch
 - 2024-05-03 Added disclaimer and feature tables to README.md
