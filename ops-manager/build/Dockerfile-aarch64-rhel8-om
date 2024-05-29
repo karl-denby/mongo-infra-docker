@@ -29,11 +29,35 @@ RUN systemctl enable mongod && \
     echo "mms.mail.transport=smtp" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
     echo "mms.mail.hostname=smtp.om.internal" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
     echo "mms.mail.port=1025" >> /opt/mongodb/mms/conf/conf-mms.properties && \ 
-    echo "mms.emailDaoClass=SIMPLE_MAILER" >> /opt/mongodb/mms/conf/conf-mms.properties 
+    echo "mms.emailDaoClass=SIMPLE_MAILER" >> /opt/mongodb/mms/conf/conf-mms.properties && \
+    echo "brs.queryable.pem=/certs/queryable.pem" >> /opt/mongodb/mms/conf/conf-mms.properties && \
+    echo "mongodb.release.autoDownload=false" >> /opt/mongodb/mms/conf/conf-mms.properties && \
+    echo "mongodb.release.autoDownload.enterprise=false" >> /opt/mongodb/mms/conf/conf-mms.properties && \
+    echo "mongodb.release.modulePreference=enterpriseRequired" >> /opt/mongodb/mms/conf/conf-mms.properties
 
 EXPOSE 8080
 EXPOSE 8443
-EXPOSE 27999
+EXPOSE 25999
+EXPOSE 27700
+EXPOSE 27701
+EXPOSE 27702
+EXPOSE 27703
+EXPOSE 27704
+EXPOSE 27705
+EXPOSE 27706
+EXPOSE 27707
+EXPOSE 27708
+EXPOSE 27709
+EXPOSE 27710
+EXPOSE 27711
+EXPOSE 27712
+EXPOSE 27713
+EXPOSE 27714
+EXPOSE 27715
+EXPOSE 27716
+EXPOSE 27717
+EXPOSE 27718
+EXPOSE 27719
 
 STOPSIGNAL SIGRTMIN+3
 
