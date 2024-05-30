@@ -35,6 +35,12 @@ RUN systemctl enable mongod && \
     echo "mongodb.release.autoDownload.enterprise=false" >> /opt/mongodb/mms/conf/conf-mms.properties && \
     echo "mongodb.release.modulePreference=enterpriseRequired" >> /opt/mongodb/mms/conf/conf-mms.properties
 
+RUN cd /opt/mongodb/mms/mongodb-releases/ && \
+    curl -Ol https://downloads.mongodb.com/linux/mongodb-linux-aarch64-enterprise-rhel82-6.0.15.tgz && \
+    mv mongodb-linux-aarch64-enterprise-rhel82-6.0.15.tgz && \
+    mv mongodb-linux-aarch64-enterprise-rhel82-6.0.15.tgz mongodb-linux-x86_64-enterprise-rhel80-6.0.15.tgz && \
+    chown mongodb-mms:mongodb-mms mongodb-linux-x86_64-enterprise-rhel80-6.0.15.tgz
+
 EXPOSE 8080
 EXPOSE 8443
 EXPOSE 25999

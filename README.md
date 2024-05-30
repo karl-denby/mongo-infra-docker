@@ -15,7 +15,14 @@
 | File Backup | :heavy_check_mark: | use `/filesystem` in Ops Manager |
 | Snapshot Restore | :heavy_check_mark: | - |
 | PIT Restore | :heavy_check_mark: | - |
-| Queryable Restore | :x: | Works on x86_64. M1/ARM to follow soon |
+| Queryable Restore | :heavy_check_mark: | See **Note 1** below |
+
+**Note 1:**
+- On M1/ARM 6.0.15 has been downloaded and renamed as if it was an x86_64 binary
+- Ops assumes it runs on x86 so when a queryable restore for version 6.0.0 through 6.0.14 is this will be used
+- If you decided to use version 6.0.15 for something else it may get overwriten
+- If you want to do queryable on another version, download the equivalent aarch64/rhel8 binary and rename it as x86_64
+- You also need to ensure its owner:group is set to mongodb-mms:mongodb-mms
 
 For more complex tests the following have been included already. Nothing is stopping you using your own also, these will  be added based on demand.
 
@@ -112,6 +119,7 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under any of their commercial support subscriptions or otherwise. Any usage of this tool is at your own risk. It's intended only to serve as a test and environment.
 
 ## Changelog
+- 2024-05-30 Queryable pem SANs have localhost, `ops.om.internal`, `lb.om.internal`, support for ARM by renaming x86 binaries
 - 2024-05-29 Added Queryable Backup support for x86_64, set certs to expire every 28 days
 - 2024-05-20 Atlas Local testing complete on M1, update from 7.0.5 to 7.0.6, BIC, filesystem backup
 - 2024-05-10 Added Atlas Local on Docker Compose (not podman)
