@@ -15,7 +15,7 @@
 | File Backup | :heavy_check_mark: | use `/filesystem` in Ops Manager |
 | Snapshot Restore | :heavy_check_mark: | - |
 | PIT Restore | :heavy_check_mark: | - |
-| Queryable Restore | :x: | Works on x86_64. M1/ARM to follow soon |
+| Queryable Restore | :heavy_check_mark: | [Queryable](/ops-manager/docs/QUERY.md) |
 
 For more complex tests the following have been included already. Nothing is stopping you using your own also, these will  be added based on demand.
 
@@ -112,6 +112,7 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under any of their commercial support subscriptions or otherwise. Any usage of this tool is at your own risk. It's intended only to serve as a test and environment.
 
 ## Changelog
+- 2024-05-30 Queryable pem SANs have localhost, `ops.om.internal`, `lb.om.internal`, support for ARM by renaming x86 binaries
 - 2024-05-29 Added Queryable Backup support for x86_64, set certs to expire every 28 days
 - 2024-05-20 Atlas Local testing complete on M1, update from 7.0.5 to 7.0.6, BIC, filesystem backup
 - 2024-05-10 Added Atlas Local on Docker Compose (not podman)

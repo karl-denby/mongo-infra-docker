@@ -16,3 +16,6 @@ subjectAltName=@qb_subject_alt_names
 
 [qb_subject_alt_names]
 DNS.1 = ops.om.internal
+DNS.2 = lb.om.internal
+DNS.3 = localhost
+IP.1 = 192.168.122.198

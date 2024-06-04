@@ -3,7 +3,7 @@ services:
   ops:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86_64-rhel8-om
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-om
     container_name: ops
     deploy:
       resources:
@@ -32,7 +32,7 @@ services:
   node1:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86_64-rhel8-node
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-node
     container_name: node1
     deploy:
       resources:
@@ -55,7 +55,7 @@ services:
   metadata:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86_64-rhel8-node
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-node
     container_name: metadata
     deploy:
       resources:
@@ -80,7 +80,7 @@ services:
   oplog:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86_64-rhel8-node
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-node
     container_name: oplog
     deploy:
       resources:
@@ -105,7 +105,7 @@ services:
   blockstore:
     build:
       context: .
-      dockerfile: ./build/Dockerfile-x86_64-rhel8-node
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-node
     container_name: blockstore
     deploy:
       resources:
