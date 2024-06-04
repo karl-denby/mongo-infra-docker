@@ -51,7 +51,7 @@ do
       echo "Configuring for Linux-ARM"
       sed -i 's/x86_64/aarch64/g' docker-compose.yml  # linux dev server
       export platform="aarch64"
-      export distro="amazn2"
+      export distro="amzn2"
       break
       ;;
     Quit)

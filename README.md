@@ -15,14 +15,7 @@
 | File Backup | :heavy_check_mark: | use `/filesystem` in Ops Manager |
 | Snapshot Restore | :heavy_check_mark: | - |
 | PIT Restore | :heavy_check_mark: | - |
-| Queryable Restore | :heavy_check_mark: | See **Note 1** below |
-
-**Note 1:**
-- On M1/ARM 6.0.15 has been downloaded and renamed as if it was an x86_64 binary
-- Ops assumes it runs on x86 so when a queryable restore for version 6.0.0 through 6.0.14 is this will be used
-- If you decided to use version 6.0.15 for something else it may get overwriten
-- If you want to do queryable on another version, download the equivalent aarch64/rhel8 binary and rename it as x86_64
-- You also need to ensure its owner:group is set to mongodb-mms:mongodb-mms
+| Queryable Restore | :heavy_check_mark: | [Queryable](/ops-manager/docs/QUERY.md) |
 
 For more complex tests the following have been included already. Nothing is stopping you using your own also, these will  be added based on demand.
 
