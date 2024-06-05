@@ -52,6 +52,54 @@ services:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
 
+  node2:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-node
+    container_name: node2
+    deploy:
+      resources:
+        limits:
+          cpus: '2.000'
+          memory: 2.5G
+        reservations:
+          cpus: '0.500'
+          memory: 1G
+    hostname: node2.om.internal
+    networks:
+      main:
+        aliases:
+          - node2.alt.internal
+    privileged: true
+    volumes:
+      - ./mongodb-mms:/etc/mongodb-mms:ro
+      - ./certs:/certs
+
+
+  node3:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-aarch64-rhel8-node
+    container_name: node3
+    deploy:
+      resources:
+        limits:
+          cpus: '2.000'
+          memory: 2.5G
+        reservations:
+          cpus: '0.500'
+          memory: 1G
+    hostname: node3.om.internal
+    networks:
+      main:
+        aliases:
+          - node3.alt.internal
+    privileged: true
+    volumes:
+      - ./mongodb-mms:/etc/mongodb-mms:ro
+      - ./certs:/certs
+
+
   metadata:
     build:
       context: .

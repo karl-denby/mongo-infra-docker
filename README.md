@@ -54,17 +54,31 @@ Ops Manager and one MongoDB Agent (Make sure docker has access to **12G of RAM o
 
 4. Press any key to unpause the script, it will download an Agent and start up a container with it running inside that is connected to the Ops Manager you deployed earlier, your environment is setup.
 
-5. **Optional:** If you want an oplog store and block store for backup testing run `docker compose up -d oplog blockstore` they will be added to the same project, then you can use the OM ui to install standalones, then move to the Admin UI and configure them as backup targets. If you setup TLS in the project, I'd recommend setting TLS for metadata to AllowTLS so that you don't have to mess with the OM keystore (unless that is what you are testing)
-
-6. **Optional:** If you want a proxy you can run `docker compose up -d proxy`, it will be available on http://proxy.om.internal:3128 and can work with http or https. View container logs if you want to see what is using the proxy. It is allocated around 125mb of Memory.
-
-7. **Optional:** If you want a load-balancer run `docker compose up -d lb`, it will be availble on http://lb.om.internal and you should set your Ops Manager Central URL to this and set `X-forwarded-for`. It uses about 125mb of Memory.
-
-8. **Optional:** If you want to see emails sent by Ops Manager run `docker compose up -d smtp` you can then go to http://localhost:1080 to see a webui and all the emails set to `smtp.om.internal:1025` it only captures while its running, so it won't show you emails from before it ran, but if you need to do email resets or check invites/alerts. It uses about 125mb of Memory.
+5. **Optional:** run `bash extras.sh` and select the option you would like setup, it looks like this:
+```
+bash extras.sh 
+Please choose some extras:
+1) pause            3) more-servers    5) oplog           7) proxy           9) smtp           11) Quit
+2) un-pause         4) metadata        6) blockstore      8) load-balancer  10) s3
+#? 9
+Starting smtp on smtp.om.internal
+localhost:1025 is where you can send emails
+localhost:1080 is where you can read them
+[+] Running 5/5
+ ✔ smtp 4 layers [⣿⣿⣿⣿]      0B/0B      Pulled 
+   ✔ 619be1103602 Pull  
+   ✔ d87a23ae4383 Pull 
+   ✔ 49bc41facb3d Pull 
+   ✔ de31bd6756d2 Pull 
+[+] Building 0.0s
+docker:default
+[+] Running 1/1
+ ✔ Container smtp  Started 0.1s 
+```
 
 ### Result
 
-If you followed steps 1 - 6 you should have something like this within 10 minutes:
+If you followed steps 1 - 5 you should have something like this within 10 minutes:
 
 ![](ops-manager/docs/images/Example.png)
 
@@ -112,6 +126,8 @@ bash assets/x86_64_CM-agent.sh  # if your are on Intel Mac/Windows/Linux
 This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under any of their commercial support subscriptions or otherwise. Any usage of this tool is at your own risk. It's intended only to serve as a test and environment.
 
 ## Changelog
+- 2024-06-05 Added `extras.sh` to streamline addisions to the basic environment
+- 2024-06-04 Queryable works on ARM by default with 6.0.15 being available for queryable instance
 - 2024-05-30 Queryable pem SANs have localhost, `ops.om.internal`, `lb.om.internal`, support for ARM by renaming x86 binaries
 - 2024-05-29 Added Queryable Backup support for x86_64, set certs to expire every 28 days
 - 2024-05-20 Atlas Local testing complete on M1, update from 7.0.5 to 7.0.6, BIC, filesystem backup
