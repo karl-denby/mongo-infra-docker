@@ -2,6 +2,7 @@ FROM registry.access.redhat.com/ubi8/ubi-init
 
 COPY mongodb-agent.aarch64.rpm /root/mongodb-agent.aarch64.rpm
 COPY scripts/data-gen.py /root/data-gen.py
+COPY mongodb-mms/automation-agent.config /opt/mongodb-mms-automation/automation-agent.config
 
 # Install an automation agent and all dependecies
 RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl xz-libs && \
@@ -9,18 +10,15 @@ RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi 
     rpm -U /root/mongodb-agent.aarch64.rpm && \
     systemctl enable mongodb-mms-automation-agent.service && \
     systemctl enable sshd && \
-    mkdir -p /data && \
-    chown mongod:mongod /data
+    mkdir -p /data /certs && \
+    chown -R mongod:mongod /data && \
+    chown -R mongod:mongod /certs
 
 RUN dnf -y install python3 && \
     pip3 install pymongo faker
 
 RUN mkdir -p /var/run/mongodb/ && \
     touch /var/run/mongodb/mongod.pid
-
-RUN cp mongodb-mms/automation-agent.config /opt/mongodb-mms-automation/automation-agent.config
-
-RUN chown -R mongod:mongod /certs/
 
 STOPSIGNAL SIGRTMIN+3
 
