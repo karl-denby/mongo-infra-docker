@@ -75,19 +75,21 @@ then
   urls=("https://repo.mongodb.com/yum/redhat/8/mongodb-enterprise/${version_for_url}/${platform}/RPMS/mongodb-enterprise-server-6.0.0-1.el8.${platform}.rpm" "https://downloads.mongodb.com/on-prem-mms/rpm/mongodb-mms-6.0.23.100.20240402T1837Z.x86_64.rpm" "https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.22%2B7/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.22_7.tar.gz" "http://localhost:8080/download/agent/automation/mongodb-mms-automation-agent-manager-latest.${platform}.${distro}.rpm")
 fi
 
-
 # echo === Downloading AppDB and Ops Manager ===
 echo "Downloading AppDB from ${urls[0]}"
-curl -o mongodb-enterprise.${platform}.rpm -L "${urls[0]}"
+curl -o mongodb-enterprise.${platform}.rpm -L "${urls[0]}"    
+
 echo ""
 echo "Downloading Ops Manger from ${urls[1]}"
 curl -o mongodb-mms.x86_64.rpm -L "${urls[1]}"
+
 echo ""
 if [[ "$platform" == "aarch64" ]]
 then
   echo "Downloading JDK ${urls[2]}"
   curl -o jdk.${platform}.tar.gz -L "${urls[2]}"
 fi
+
 echo 
 # echo === Building/Running Ops Manager Container ===
 docker compose up -d ops --build
@@ -109,7 +111,7 @@ read -n 1 -p "Press Any Key to attempt Agent setup" mainmenuinput
 echo
 echo --- Downloading Agent ---
 curl -o mongodb-agent.${platform}.rpm -L "${urls[3]}"
-docker compose up -d node1
+docker compose up -d node1 node2 node3
 echo
 echo --- Please check Ops Managers server tab for your running agents ---
 echo Done

@@ -39,6 +39,7 @@ RUN cd /opt/mongodb/mms/mongodb-releases/ && \
     curl -Ol https://downloads.mongodb.com/linux/mongodb-linux-aarch64-enterprise-rhel82-6.0.15.tgz && \
     mv mongodb-linux-aarch64-enterprise-rhel82-6.0.15.tgz mongodb-linux-x86_64-enterprise-rhel80-6.0.15.tgz && \
     chown mongodb-mms:mongodb-mms mongodb-linux-x86_64-enterprise-rhel80-6.0.15.tgz && \
+    tar -xzf mongodb-linux-x86_64-enterprise-rhel80-6.0.15.tgz && \
     mv mongodb-linux-aarch64-enterprise-rhel82-6.0.15 mongodb-linux-x86_64-enterprise-rhel80-6.0.15
 
 EXPOSE 8080
