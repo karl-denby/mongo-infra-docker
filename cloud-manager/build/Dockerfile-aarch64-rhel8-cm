@@ -6,12 +6,12 @@ COPY mongodb-agent.aarch64.rpm /root/mongodb-agent.aarch64.rpm
 RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl xz-libs && \
     dnf clean all && \
     # Tell systemd to start httpd
-    dnf -y install mongodb-agent.aarch64.rpm && \
+    dnf -y install /root/mongodb-agent.aarch64.rpm && \
     systemctl enable mongodb-mms-automation-agent.service && \
     systemctl enable sshd && \
     mkdir -p /data && \
     chown mongod:mongod /data    
-    
+
 STOPSIGNAL SIGRTMIN+3
 
 CMD [ "/sbin/init" ]
