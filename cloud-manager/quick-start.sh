@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo Please choose a platform: 
-platform_options=("M1-Mac" "Intel-Mac")
+platform_options=("M1-Mac" "Other")
 select opt in "${platform_options[@]}"
 do
   case $opt in
@@ -10,8 +10,8 @@ do
       export asset="../assets/aarch64_CM-agent.sh"
       break
       ;;
-    Intel-Mac)
-      echo "Configuring for an Intel Mac"
+    Other)
+      echo "Configuring for Other"
       export asset="../assets/x86_64_CM-agent.sh"
       break
       ;;
