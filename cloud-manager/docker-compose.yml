@@ -14,7 +14,6 @@ services:
           cpus: '0.500'
           memory: 1G
     hostname: n1cm.cm.internal
-    image: mongo-infra:0.1
     networks:
       main:
         aliases:
@@ -38,7 +37,6 @@ services:
           cpus: '0.500'
           memory: 1G
     hostname: n2cm.cm.internal
-    image: mongo-infra:0.1
     networks:
       main:
         aliases:
@@ -62,7 +60,6 @@ services:
           cpus: '0.500'
           memory: 1G
     hostname: n3cm.cm.internal
-    image: mongo-infra:0.1
     networks:
       main:
         aliases:
@@ -86,7 +83,6 @@ services:
           cpus: '0.500'
           memory: 1G
     hostname: n4cm.cm.internal
-    image: mongo-infra:0.1
     networks:
       main:
         aliases:
@@ -110,7 +106,6 @@ services:
           cpus: '0.500'
           memory: 1G
     hostname: n5cm.cm.internal
-    image: mongo-infra:0.1
     networks:
       main:
         aliases:
@@ -134,7 +129,6 @@ services:
           cpus: '0.500'
           memory: 1G
     hostname: n6cm.cm.internal
-    image: mongo-infra:0.1
     networks:
       main:
         aliases:
