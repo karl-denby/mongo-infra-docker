@@ -1,7 +1,7 @@
 #!/bin/bash
 echo Please choose some extras: 
-platform_options=("pause" "un-pause" "more-servers" "even-more-servers" "Quit")
-select opt in "${platform_options[@]}"
+extra_options=("pause" "un-pause" "more-servers-x86_64" "more-servers-aarch64" "Quit")
+select opt in "${extra_options[@]}"
 do
   case $opt in
     pause)
@@ -14,14 +14,14 @@ do
       docker compose unpause
       break
       ;;
-    more-servers)
-      echo "Starting n2cm and n3cm"
-      docker compose up -d n2cm n3cm
+    more-servers-x86_64)
+      echo "Starting n4cm n5cm n6cm"
+      docker compose -f docker-compose-x86_64.yml up -d n4cm n5cm n6cm
       break
       ;;
-    even-more-servers)
+    more-servers-aarch64)
       echo "Starting n4cm, n5cm & n6cm"
-      docker compose up -d n4cm n5cm n6cm
+      docker compose -f docker-compose-aarch64.yml up -d n4cm n5cm n6cm
       break
       ;;
     Quit)
