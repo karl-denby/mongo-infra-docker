@@ -8,7 +8,7 @@
 3. Set the following
 ```
 TLS Certificate Authority File Path:
-- Linux = /certs/mongodb.ca.pem
+- Linux = /certs/mongodb-ca.pem
 
 Cluster Security Settings:
 - tlsCertificateKeyFile = /certs/server.om.internal.pem
