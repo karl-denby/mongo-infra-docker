@@ -51,6 +51,8 @@ services:
     volumes:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
+    ports: 
+      - "27017:27171"
 
   node2:
     build:
@@ -74,7 +76,8 @@ services:
     volumes:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
-
+    ports: 
+      - "27017:27172"
 
   node3:
     build:
@@ -98,7 +101,8 @@ services:
     volumes:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
-
+    ports: 
+      - "27017:27173"
 
   metadata:
     build:

@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  sync:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-x86_64-rhel8-sync
+    container_name: sync
+    deploy:
+      resources:
+        limits:
+          cpus: '2.000'
+          memory: 4G
+        reservations:
+          cpus: '1.000'
+          memory: 2G
+    hostname: sync.om.internal
+    networks:
+      main:
+        aliases:
+          - sync
+          - sync.om.internal
+          - sync.alt.internal
+    privileged: true
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./mongosync-1.7.3:/root/mongosync-1.7.3
+
+networks:
+  main:
