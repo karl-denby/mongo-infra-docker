@@ -1,3 +1,5 @@
 filesystem/
 *.rpm
 *.tar.gz
+mongosync/mongodb-sync.tgz
+mongosync/mongosync-1.7.3

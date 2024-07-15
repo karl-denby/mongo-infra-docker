@@ -1,0 +1,11 @@
+FROM registry.access.redhat.com/ubi8/ubi-init
+
+# Install some typical deps and mongosync
+RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl xz-libs && \
+    dnf -y install net-tools && \
+    dnf clean all && \
+    ln -s /root/mongosync-1.7.3/bin/mongosync /usr/bin/mongosync
+
+STOPSIGNAL SIGRTMIN+3
+
+CMD [ "/sbin/init" ]
