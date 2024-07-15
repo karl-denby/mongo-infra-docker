@@ -1,6 +1,6 @@
 #!/bin/bash
 echo Please choose some extras: 
-platform_options=("pause" "un-pause" "more-servers" "metadata" "oplog" "blockstore" "proxy" "load-balancer" "smtp" "s3" "Quit")
+platform_options=("pause" "un-pause" "more-servers" "metadata" "oplog" "blockstore" "proxy" "load-balancer" "smtp" "s3" "clean" "Quit")
 select opt in "${platform_options[@]}"
 do
   case $opt in
@@ -60,6 +60,12 @@ do
     s3)
       echo "Starting s3 on http://s3.om.internal:3900"
       docker compose up -d s3
+      break
+      ;;
+    clean)
+      echo "Removing all containers"
+      docker compose down
+      docker image rm ops-manager-ops ops-manager-node1 ops-manager-node2 ops-manager-node3
       break
       ;;
     Quit)
