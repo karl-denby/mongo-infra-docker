@@ -52,7 +52,7 @@ services:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
     ports: 
-      - "27017:27171"
+      - "27171:27017"
 
   node2:
     build:
@@ -77,7 +77,7 @@ services:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
     ports: 
-      - "27017:27172"
+      - "27172:27017"
 
   node3:
     build:
@@ -102,7 +102,7 @@ services:
       - ./mongodb-mms:/etc/mongodb-mms:ro
       - ./certs:/certs
     ports: 
-      - "27017:27173"
+      - "27173:27017"
 
   metadata:
     build:
