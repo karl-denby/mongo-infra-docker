@@ -4,6 +4,7 @@
 - It will create 2 buckets oplog/blockstore
 - It will generate a unique key that has access to these
 - It will print out the settings you should apply
+- **Don't forget to install mongod on metadata, you can use ops manager to do this**
 - If you have an api key you can run something like this to do the configuration for you
 
 ```bash

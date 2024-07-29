@@ -53,9 +53,12 @@ do
       break
       ;;
     s3)
+      echo "Starting the Backup Daemon process"
+      docker exec -it ops /opt/mongodb/mms/bin/mongodb-mms-backup-daemon start
       echo "Starting metadata on mongodb://metadata.om.internal:27017"
       echo "Starting garage/s3 on http://s3.om.internal:3900"
       docker compose up -d metadata s3
+      sleep 5
       docker exec -it s3 ./garage bucket create oplog 2>&1
       docker exec -it s3 ./garage bucket create blockstore 2>&1
       echo "Go to Admin >> Backup, Enter '/head' and hit Set, then Enable Daemon"

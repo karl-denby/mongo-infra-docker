@@ -1,7 +1,7 @@
 #!/bin/bash
 
 version_options=("7-0-8" "6-0-24")
-echo Please choose a version: 
+echo "Please choose an Ops Manager version:" 
 select opt in "${version_options[@]}"
 do
   case $opt in
@@ -21,34 +21,34 @@ do
   esac
 done
 
-echo Please choose a platform: 
+echo "Please choose your system platform: (so we download the correct binaries for you)" 
 platform_options=("M1-Mac" "Intel-Mac" "Linux" "Linux-ARM" "Quit")
 select opt in "${platform_options[@]}"
 do
   case $opt in
     M1-Mac)
-      echo "Configuring for an M1/M2/Mxxx Mac"
+      echo "Configuring for an M1/M2/Mxxx Mac (aarch64)"
       sed -i '' 's/x86_64/aarch64/g' docker-compose.yml # weird mac sed
       export platform="aarch64"
       export distro="amzn2"
       break
       ;;
     Intel-Mac)
-      echo "Configuring for an Intel Mac"
+      echo "Configuring for an Intel Mac (x86_64)"
       sed -i '' 's/aarch64/x86_64/g' docker-compose.yml # weird mac sed
       export platform="x86_64"
       export distro="rhel8"
       break
       ;;
     Linux)
-      echo "Configuring for Linux"
+      echo "Configuring for Linux (x86_64)"
       sed -i 's/aarch64/x86_64/g' docker-compose.yml  # normal sed
       export platform="x86_64"
       export distro="rhel8"
       break
       ;;
     Linux-ARM)
-      echo "Configuring for Linux-ARM"
+      echo "Configuring for Linux (aarch64)"
       sed -i 's/x86_64/aarch64/g' docker-compose.yml  # linux dev server
       export platform="aarch64"
       export distro="amzn2"
@@ -98,7 +98,7 @@ echo
 echo --- Ops Manager setup ---
 echo Please check http://localhost:8080 
 echo If Ops Manager is running set central URL to http://ops.om.internal:8080
-echo Please update 'mongodb-mms/automation-agent.config' with the correct values for
+echo Please update './mongodb-mms/automation-agent.config' with the correct values for
 echo
 echo mmsGroupId=xxxxxxxxxxxxxxxxxx
 echo mmsApiKey=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
