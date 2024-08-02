@@ -1,5 +1,14 @@
 #!/bin/bash
 
+if [[ "$DOCKER_DEFAULT_PLATFORM" == linux/amd64 ]]
+then
+  echo "Looks like you've set DOCKER_DEFAULT_PLATFORM to force amd64:"
+  echo " - We want to run an native aarch64 container for you"
+  echo " - You could try unset DOCKER_DEFAULT_PLATFORM, then run this again"
+  echo " - More details https://github.com/karl-denby/mongo-infra-docker/issues/72"
+  exit 1
+fi
+
 version_options=("7-0-8" "6-0-24")
 echo Please choose a version: 
 select opt in "${version_options[@]}"
