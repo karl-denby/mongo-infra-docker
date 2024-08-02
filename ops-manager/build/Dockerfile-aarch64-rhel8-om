@@ -1,8 +1,8 @@
 FROM registry.access.redhat.com/ubi8/ubi-init
 
-COPY mongodb-enterprise.aarch64.rpm /root/mongodb-enterprise.aarch64.rpm
-COPY mongodb-mms.x86_64.rpm /root/mongodb-mms.x86_64.rpm
-COPY jdk.aarch64.tar.gz /opt/mongodb/mms/jdk.aarch64.tar.gz
+COPY downloads/mongodb-enterprise.aarch64.rpm /root/mongodb-enterprise.aarch64.rpm
+COPY downloads/mongodb-mms.x86_64.rpm /root/mongodb-mms.x86_64.rpm
+COPY downloads/jdk.aarch64.tar.gz /opt/mongodb/mms/jdk.aarch64.tar.gz
 
 # Install MongoDB and Ops Manager
 RUN dnf -y install openssh-server iputils hostname cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain krb5-libs libcurl lm_sensors-libs net-snmp net-snmp-agent-libs openldap openssl xz-libs && \

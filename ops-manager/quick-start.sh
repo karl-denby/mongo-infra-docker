@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version_options=("7-0-8" "6-0-24")
+version_options=("7-0-8" "6-0-24" "downloaded")
 echo Please choose a version: 
 select opt in "${version_options[@]}"
 do
@@ -8,11 +8,27 @@ do
     7-0-8)
       export version='7.0.8'
       export version_for_url='7.0'
+      touch downloads/7.ver
+      rm downloads/6.ver 2>&1
       break
       ;;
     6-0-24)
       export version='6.0.24'
       export version_for_url='6.0'
+      touch downloads/6.ver
+      rm downloads/7.ver 2>&1
+      break
+      ;;    
+    downloaded)
+      if [ -e downloads/7.ver ]
+      then
+        export version='7.0.8'
+        export version_for_url='7.0'
+      else
+        export version='6.0.24'
+        export version_for_url='6.0'
+      fi
+      export skip_download='true'
       break
       ;;
     *)
@@ -76,18 +92,21 @@ then
 fi
 
 # echo === Downloading AppDB and Ops Manager ===
-echo "Downloading AppDB from ${urls[0]}"
-curl -o mongodb-enterprise.${platform}.rpm -L "${urls[0]}"
-echo ""
-echo "Downloading Ops Manger from ${urls[1]}"
-curl -o mongodb-mms.x86_64.rpm -L "${urls[1]}"
-echo ""
-if [[ "$platform" == "aarch64" ]]
+if [[ $skip_download != true ]]
 then
-  echo "Downloading JDK ${urls[2]}"
-  curl -o jdk.${platform}.tar.gz -L "${urls[2]}"
-fi
-echo 
+  echo "Downloading AppDB from ${urls[0]}"
+  curl -o downloads/mongodb-enterprise.${platform}.rpm -L "${urls[0]}"
+  echo ""
+  echo "Downloading Ops Manger from ${urls[1]}"
+  curl -o downloads/mongodb-mms.x86_64.rpm -L "${urls[1]}"
+  echo ""
+  if [[ "$platform" == "aarch64" ]]
+  then
+    echo "Downloading JDK ${urls[2]}"
+    curl -o downloads/jdk.${platform}.tar.gz -L "${urls[2]}"
+  fi
+  echo
+fi 
 # echo === Building/Running Ops Manager Container ===
 docker compose up -d ops --build
 echo
@@ -107,7 +126,7 @@ echo Press any key to attempt agent download from http://localhost:8080 using th
 read -n 1 -p "Press Any Key to attempt Agent setup" mainmenuinput
 echo
 echo --- Downloading Agent ---
-curl -o mongodb-agent.${platform}.rpm -L "${urls[3]}"
+curl -o downloads/mongodb-agent.${platform}.rpm -L "${urls[3]}"
 docker compose up -d node1
 echo
 echo --- Please check Ops Managers server tab for your running agents ---
