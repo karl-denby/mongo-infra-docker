@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi8/ubi-init
 
-COPY mongodb-agent.aarch64.rpm /root/mongodb-agent.aarch64.rpm
+COPY downloads/mongodb-agent.aarch64.rpm /root/mongodb-agent.aarch64.rpm
 COPY scripts/data-gen.py /root/data-gen.py
 
 # Install an automation agent and all dependecies

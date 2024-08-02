@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/ubi8/ubi-init
 
-COPY mongodb-enterprise.x86_64.rpm /root/mongodb-enterprise.x86_64.rpm
-COPY mongodb-mms.x86_64.rpm /root/mongodb-mms.x86_64.rpm
+COPY downloads/mongodb-enterprise.x86_64.rpm /root/mongodb-enterprise.x86_64.rpm
+COPY downloads/mongodb-mms.x86_64.rpm /root/mongodb-mms.x86_64.rpm
 
 
 # Install MongoDB and Ops Manager

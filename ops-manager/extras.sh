@@ -91,7 +91,7 @@ do
       docker exec -it s3 ./garage key delete --yes my-key
       echo "Removing all containers"
       docker compose down
-      docker image rm ops-manager-ops ops-manager-node1 ops-manager-node2 ops-manager-node3 metadata s3 smtp lb proxy blockstore oplog
+      docker image rm ops-manager-ops ops-manager-node1 ops-manager-node2 ops-manager-node3 metadata s3 smtp lb proxy blockstore oplog 2>&1
       break
       ;;
     Quit)
