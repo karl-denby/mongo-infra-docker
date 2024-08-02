@@ -5,6 +5,5 @@ mongosync/mongodb-sync.tgz
 mongosync/mongosync-1.7.3
 ops-manager/garage/data/*
 ops-manager/garage/meta/*
-ops-manager/downloads/*.ver
-ops-manager/downloads/*.rpm
-ops-manager/downloads/*.tar.gz
+ops-manager/downloads/*
+!ops-manager/downloads/
