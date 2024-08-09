@@ -1,6 +1,7 @@
 version: "3.9"
 services:
   sync:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: ./build/Dockerfile-x86_64-rhel8-sync
@@ -22,9 +23,11 @@ services:
           - sync.alt.internal
     privileged: true
     ports:
-      - "9999:9999"
+      - "27182:27182"
     volumes:
       - ./mongosync-1.7.3:/root/mongosync-1.7.3
 
 networks:
   main:
+    external:
+      name: cloud-manager_main
