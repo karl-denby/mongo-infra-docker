@@ -1,0 +1,35 @@
+FROM phusion/baseimage:jammy-1.0.4
+
+# Install and configure OpenLDAP binaries
+ENV DEBIAN_FRONTEND=noninteractive
+ADD build/ldap/conf/slapd-deb.conf /tmp
+
+RUN apt-get update && \
+    apt-get install openssh-client openssh-server sudo -y && \
+    cat /tmp/slapd-deb.conf | debconf-set-selections && \
+    apt-get install ldap-utils slapd -y && \ 
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Copy ldif files
+ADD build/ldap/ldif/*.ldif /tmp/
+
+# prepare slapd service
+RUN mkdir -p /etc/service/slapd
+COPY build/ldap/scripts/slapd.sh /etc/service/slapd/run
+RUN chmod 755 /etc/service/slapd/run
+RUN service slapd start
+
+# configure memberOf, users and groups
+COPY build/ldap/scripts/init-ldap.sh /tmp/init-ldap.sh
+RUN chmod +x /tmp/init-ldap.sh && /tmp/init-ldap.sh
+
+
+EXPOSE 389
+
+EXPOSE 636
+
+EXPOSE 22
+
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
+

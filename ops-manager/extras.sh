@@ -1,6 +1,6 @@
 #!/bin/bash
 echo Please choose some extras: 
-platform_options=("pause" "un-pause" "more-servers" "oplog" "blockstore" "proxy" "load-balancer" "smtp" "s3" "clean" "Quit")
+platform_options=("pause" "un-pause" "more-servers" "oplog" "blockstore" "proxy" "load-balancer" "smtp" "s3" "ldap" "clean" "Quit")
 select opt in "${platform_options[@]}"
 do
   case $opt in
@@ -84,6 +84,11 @@ do
       docker exec -it s3 ./garage bucket allow blockstore --key my-key --read --write --owner 2>&1
       break
       ;;
+    ldap)
+      echo "Starting openldap server"
+      docker compose up -d ldap
+      break
+      ;;  
     clean)
       echo "cleaning up s3 data"
       docker exec -it s3 ./garage bucket delete --yes oplog
