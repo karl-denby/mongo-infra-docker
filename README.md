@@ -16,6 +16,7 @@
 | Snapshot Restore | :heavy_check_mark: | - |
 | PIT Restore | :heavy_check_mark: | - |
 | Queryable Restore | :heavy_check_mark: | [Queryable](/ops-manager/docs/QUERY.md) |
+| LDAP Server | :heavy_check_mark: | [LDAP](/ops-manager/docs/LDAP.md) |
 
 For more complex tests the following have been included already. Nothing is stopping you using your own also, these will  be added based on demand.
 
