@@ -60,22 +60,28 @@ objectClass: organizationalUnit
 
 dn: uid=owner,ou=omusers,dc=tsdocker,dc=com
 uid: owner
+sn: owner
+cn: owner
 objectClass: top
-objectClass: account
+objectClass: inetOrgPerson
 objectClass: simpleSecurityObject
 userpassword: {SSHA}5DjT7IC/8qIUgruyLWJI4jTkqrcTzTUu
 
 dn: uid=reader,ou=omusers,dc=tsdocker,dc=com
 uid: reader
+sn: reader
+cn: reader
 objectClass: top
-objectClass: account
+objectClass: inetOrgPerson
 objectClass: simpleSecurityObject
 userpassword: {SSHA}5DjT7IC/8qIUgruyLWJI4jTkqrcTzTUu
 
 #Temporary addition
 dn: uid=admin,ou=omusers,dc=tsdocker,dc=com
 uid: admin
+sn: admin
+cn: admin
 objectClass: top
-objectClass: account
+objectClass: inetOrgPerson
 objectClass: simpleSecurityObject
 userpassword: {SSHA}5DjT7IC/8qIUgruyLWJI4jTkqrcTzTUu
