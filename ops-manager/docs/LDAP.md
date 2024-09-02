@@ -58,7 +58,7 @@ LDAP Global Role Read Only: `cn=readers,ou=omgroups,dc=tsdocker,dc=com`
 4. Access the `Settings` tab and select `LDAP` Then select `Native LDAP Authentication`.
 ![](images/LDAP-08.png)
 ![](images/LDAP-09.png)
-Server URL (Required): `ladp:389`
+Server URL (Required): `ldap:389`
 Transport Security: `None`
 Bind Method: `Simple`
 SASL Mechanisms: `PLAIN`
