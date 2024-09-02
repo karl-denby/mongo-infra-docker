@@ -276,5 +276,26 @@ services:
       - "3903:3903"
       - "3904:3904"
 
+  ldap:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-ldap
+    hostname: ldap.om.internal
+    container_name: ldap
+    mem_limit: 768m
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    ports:
+      - "22"
+      - "389:389"
+    privileged: true
+    networks:
+        main:
+          aliases:
+          - ldap
+          - ldap.om.internal
+
 networks:
   main:

@@ -29,6 +29,7 @@ For more complex tests the following have been included already. Nothing is stop
 | LDAP | :x: | Not included yet |
 | Kerberos | :x: | Not included yet |
 | KMIP | :x: | Not included yet |
+| LDAP Server | :heavy_check_mark: | [LDAP](/ops-manager/docs/LDAP.md) |
 
 ## Usage
 
