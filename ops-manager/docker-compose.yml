@@ -290,7 +290,6 @@ services:
     ports:
       - "22"
       - "389:389"
-      - "636:636"
     privileged: true
     networks:
         main:
