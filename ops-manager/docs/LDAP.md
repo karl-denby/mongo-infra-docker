@@ -46,6 +46,7 @@ LDAP Global Role Owner: `cn=owners,ou=omgroups,dc=tsdocker,dc=com`
 LDAP Users Eamil: `mail`
 ![](images/LDAP-05.png)
 LDAP Global Role Read Only: `cn=readers,ou=omgroups,dc=tsdocker,dc=com`
+* Validate your access by logging out and back into Ops Manager with the user `admin` and the password `Password1!`, you can also validate with thre user `reader`.
 
 
 ## How to Allow LDAP Auth for Users in your deployments
@@ -77,3 +78,8 @@ Query Password (LDAP Bind DN): `Password1!`
 ![](images/LDAP-12.png)
 Authorization Query Template: `{USER}?memberOf?base`
 7. Click `Save Settings`, `Review and Deploy` & `Confirm And Deploy` to enable your changes
+8. Validate your access with the following command
+```
+mongosh localhost:27171 --username writer --password Password1! --authenticationDatabase '$external' --authenticationMechanism PLAIN
+```
+* You can also validate with the users `dba` & `reader`
