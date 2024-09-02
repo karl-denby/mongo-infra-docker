@@ -65,12 +65,14 @@ SASL Mechanisms: `PLAIN`
 Query User (LDAP Bind DN): `cn=admin,dc=tsdocker,dc=com`
 Query Password (LDAP Bind DN): `Password1!`
 ![](images/LDAP-10.png)
+```
 [
         {
           match: "(.+)",
           substitution: "uid={0},ou=dbUsers,dc=tsdocker,dc=com"
         }
 ]
+```
 5. Click on `Validate LDAP Configuration` and make sure it returns Green and OK - if not retrace your steps and follow this guide to the T.
 ![](images/LDAP-11.png)
 
