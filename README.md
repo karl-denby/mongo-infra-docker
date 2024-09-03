@@ -9,7 +9,7 @@
 | Ops Manager | :heavy_check_mark: | `cd ops-manager` |
 | Cloud Manager |  :heavy_check_mark: | `cd cloud-manager` If you have low RAM, consider this instead of Ops Manager |
 | MongoDB Agent | :heavy_check_mark: | - |
-| BI Connector | :heavy_check_mark: | Check OM Release notes for RHEL8 x86/ARM support |
+| BI Connector | :heavy_check_mark: | [BI Connector](/ops-manager/docs/BICONNECTOR.md) |
 | Blockstore Backup | :heavy_check_mark: | - |
 | S3 Backup | :heavy_check_mark: | [S3 Backup](/ops-manager/docs/BACKUP.md) |
 | File Backup | :heavy_check_mark: | use `/filesystem` in Ops Manager |
