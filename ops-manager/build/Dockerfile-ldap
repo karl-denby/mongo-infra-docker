@@ -24,7 +24,6 @@ RUN service slapd start
 COPY build/ldap/scripts/init-ldap.sh /tmp/init-ldap.sh
 RUN chmod +x /tmp/init-ldap.sh && /tmp/init-ldap.sh
 
-
 EXPOSE 389
 
 EXPOSE 22
