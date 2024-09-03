@@ -9,20 +9,20 @@ then
   exit 1
 fi
 
-version_options=("7-0-8" "6-0-24" "downloaded")
+version_options=("7-0-10" "6-0-25" "downloaded")
 echo Please choose a version: 
 select opt in "${version_options[@]}"
 do
   case $opt in
-    7-0-8)
-      export version='7.0.8'
+    7-0-10)
+      export version='7.0.10'
       export version_for_url='7.0'
       touch downloads/7.ver
       rm downloads/6.ver 2>&1
       break
       ;;
-    6-0-24)
-      export version='6.0.24'
+    6-0-25)
+      export version='6.0.25'
       export version_for_url='6.0'
       touch downloads/6.ver
       rm downloads/7.ver 2>&1
@@ -31,10 +31,10 @@ do
     downloaded)
       if [ -e downloads/7.ver ]
       then
-        export version='7.0.8'
+        export version='7.0.10'
         export version_for_url='7.0'
       else
-        export version='6.0.24'
+        export version='6.0.25'
         export version_for_url='6.0'
       fi
       export skip_download='true'
@@ -66,14 +66,14 @@ do
       break
       ;;
     Linux)
-      echo "Configuring for Linux"
+      echo "Configuring for Linux/Windows"
       sed -i 's/aarch64/x86_64/g' docker-compose.yml  # normal sed
       export platform="x86_64"
       export distro="rhel8"
       break
       ;;
     Linux-ARM)
-      echo "Configuring for Linux-ARM"
+      echo "Configuring for Generic-ARM"
       sed -i 's/x86_64/aarch64/g' docker-compose.yml  # linux dev server
       export platform="aarch64"
       export distro="amzn2"
@@ -90,14 +90,14 @@ do
 done
 
 # Set up urls based on the above parameters
-if [[ "$version" == "7.0.8" ]] # Updates JDK to jdk-17.0.11+9.
+if [[ "$version" == "7.0.10" ]] # Updates JDK to jdk-17.0.12+7.
 then
-  urls=("https://repo.mongodb.com/yum/redhat/8/mongodb-enterprise/${version_for_url}/${platform}/RPMS/mongodb-enterprise-server-7.0.0-1.el8.${platform}.rpm" "https://downloads.mongodb.com/on-prem-mms/rpm/mongodb-mms-7.0.8.500.20240627T1703Z.x86_64.rpm" "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.11%2B9/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.11_9.tar.gz" "http://localhost:8080/download/agent/automation/mongodb-mms-automation-agent-manager-latest.${platform}.${distro}.rpm")
+  urls=("https://repo.mongodb.com/yum/redhat/8/mongodb-enterprise/${version_for_url}/${platform}/RPMS/mongodb-enterprise-server-7.0.0-1.el8.${platform}.rpm" "https://downloads.mongodb.com/on-prem-mms/rpm/mongodb-mms-7.0.10.500.20240731T2149Z.x86_64.rpm" "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.12%2B7/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.12_7.tar.gz" "http://localhost:8080/download/agent/automation/mongodb-mms-automation-agent-manager-latest.${platform}.${distro}.rpm")
 fi
 
-if [[ "$version" == "6.0.24" ]] # Updates JDK to jdk-11.0.22+7
+if [[ "$version" == "6.0.25" ]] # Updates JDK to jdk-11.0.24+8
 then
-  urls=("https://repo.mongodb.com/yum/redhat/8/mongodb-enterprise/${version_for_url}/${platform}/RPMS/mongodb-enterprise-server-6.0.0-1.el8.${platform}.rpm" "https://downloads.mongodb.com/on-prem-mms/rpm/mongodb-mms-6.0.24.100.20240712T1253Z.x86_64.rpm" "https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.22%2B7/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.22_7.tar.gz" "http://localhost:8080/download/agent/automation/mongodb-mms-automation-agent-manager-latest.${platform}.${distro}.rpm")
+  urls=("https://repo.mongodb.com/yum/redhat/8/mongodb-enterprise/${version_for_url}/${platform}/RPMS/mongodb-enterprise-server-6.0.0-1.el8.${platform}.rpm" "https://downloads.mongodb.com/on-prem-mms/rpm/mongodb-mms-6.0.25.100.20240807T1538Z.x86_64.rpm" "https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.24%2B8/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.24_8.tar.gz" "http://localhost:8080/download/agent/automation/mongodb-mms-automation-agent-manager-latest.${platform}.${distro}.rpm")
 fi
 
 # echo === Downloading AppDB and Ops Manager ===
