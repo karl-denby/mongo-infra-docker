@@ -6,17 +6,16 @@
 
 | Feature | Supported | Notes |
 | --- | --- | --- |
-| Ops Manager | Yes | `cd ops-manager` |
-| Cloud Manager |  Yes | `cd cloud-manager` If you have low RAM, consider this instead of Ops Manager |
-| MongoDB Agent | Yes | - |
-| BI Connector | Yes | Check OM Release notes for RHEL8 x86/ARM support |
-| Backup Daemon | Yes | use `/head` directory |
-| S3 Backup | Yes | [S3 Backup](/ops-manager/docs/BACKUP.md) |
-| Blockstore Backup | Yes | - |
-| File Backup | Yes | use `/filesystem` in Ops Manager |
-| Snapshot Restore | Yes | - |
-| PIT Restore | Yes | - |
-| Queryable Restore | Yes | [Queryable](/ops-manager/docs/QUERY.md) |
+| Ops Manager | :heavy_check_mark: | `cd ops-manager` |
+| Cloud Manager |  :heavy_check_mark: | `cd cloud-manager` If you have low RAM, consider this instead of Ops Manager |
+| MongoDB Agent | :heavy_check_mark: | - |
+| BI Connector | :heavy_check_mark: | [BI Connector](/ops-manager/docs/BICONNECTOR.md) |
+| Blockstore Backup | :heavy_check_mark: | - |
+| S3 Backup | :heavy_check_mark: | [S3 Backup](/ops-manager/docs/BACKUP.md) |
+| File Backup | :heavy_check_mark: | use `/filesystem` in Ops Manager |
+| Snapshot Restore | :heavy_check_mark: | - |
+| PIT Restore | :heavy_check_mark: | - |
+| Queryable Restore | :heavy_check_mark: | [Queryable](/ops-manager/docs/QUERY.md) |
 
 For more complex tests the following have been included already. Nothing is stopping you using your own also, these will  be added based on demand.
 
