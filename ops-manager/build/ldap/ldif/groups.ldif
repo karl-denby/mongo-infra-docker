@@ -1,67 +1,67 @@
 # groups OU
-dn: ou=dbRoles,dc=tsdocker,dc=com
+dn: ou=dbRoles,dc=om,dc=internal
 ou: groups
 objectClass: organizationalUnit
 
 # Groups for MongoDB Users
-dn: cn=readWriteAnyDatabase,ou=dbRoles,dc=tsdocker,dc=com
+dn: cn=readWriteAnyDatabase,ou=dbRoles,dc=om,dc=internal
 objectClass: groupOfNames
 cn: readWriteAnyDatabase
-member: uid=writer,ou=dbUsers,dc=tsdocker,dc=com
+member: uid=writer,ou=dbUsers,dc=om,dc=internal
 
-dn: cn=read,ou=dbRoles,dc=tsdocker,dc=com
+dn: cn=read,ou=dbRoles,dc=om,dc=internal
 objectClass: groupOfNames
 cn: read
-member: uid=reader,ou=DbUsers,dc=tsdocker,dc=com
+member: uid=reader,ou=DbUsers,dc=om,dc=internal
 
-dn: cn=dbAdmin,ou=dbRoles,dc=tsdocker,dc=com
+dn: cn=dbAdmin,ou=dbRoles,dc=om,dc=internal
 objectClass: groupOfNames
 cn: dbAdmin
-member: uid=dba,ou=dbUsers,dc=tsdocker,dc=com
+member: uid=dba,ou=dbUsers,dc=om,dc=internal
 
 # Groups for Ops Manager Agents
 # Roles: ['clusterAdmin', 'dbAdminAnyDatabase',
 #        'readWriteAnyDatabase','userAdminAnyDatabase','restore']
-dn: cn=automation,ou=dbRoles,dc=tsdocker,dc=com
+dn: cn=automation,ou=dbRoles,dc=om,dc=internal
 objectClass: groupOfNames
 cn: automation
-member: uid=mms-automation,ou=dbUsers,dc=tsdocker,dc=com
+member: uid=mms-automation,ou=dbUsers,dc=om,dc=internal
 
 # Roles: [ { role: "clusterMonitor", db: "admin" } ]
-dn: cn=monitoring,ou=dbRoles,dc=tsdocker,dc=com
+dn: cn=monitoring,ou=dbRoles,dc=om,dc=internal
 objectClass: groupOfNames
 cn: monitoring
-member: uid=mms-monitoring,ou=dbUsers,dc=tsdocker,dc=com
+member: uid=mms-monitoring,ou=dbUsers,dc=om,dc=internal
 
 # Roles: [ { role: "backup", db: "admin" } ]
-dn: cn=backup,ou=dbRoles,dc=tsdocker,dc=com
+dn: cn=backup,ou=dbRoles,dc=om,dc=internal
 objectClass: groupOfNames
 cn: backup
-member: uid=mms-backup,ou=dbUsers,dc=tsdocker,dc=com
+member: uid=mms-backup,ou=dbUsers,dc=om,dc=internal
 
 #Groups for Ops Manager Users
 # groups OU
-dn: ou=omgroups,dc=tsdocker,dc=com
+dn: ou=omgroups,dc=om,dc=internal
 ou: groups
 objectClass: top
 objectClass: organizationalUnit
 
 # Owners
-dn: cn=owners,ou=omgroups,dc=tsdocker,dc=com
+dn: cn=owners,ou=omgroups,dc=om,dc=internal
 cn: owners
 objectClass: top
 objectClass: groupOfNames
-member: uid=owner,ou=omusers,dc=tsdocker,dc=com
+member: uid=owner,ou=omusers,dc=om,dc=internal
 
 # Read only
-dn: cn=readers,ou=omgroups,dc=tsdocker,dc=com
+dn: cn=readers,ou=omgroups,dc=om,dc=internal
 cn: readers
 objectClass: top
 objectClass: groupOfNames
-member: uid=reader,ou=omusers,dc=tsdocker,dc=com
+member: uid=reader,ou=omusers,dc=om,dc=internal
 
 #Administrators
-dn: cn=owners,ou=omgroups,dc=tsdocker,dc=com
+dn: cn=owners,ou=omgroups,dc=om,dc=internal
 changetype: modify
 add: member
-member: uid=admin,ou=omusers,dc=tsdocker,dc=com
+member: uid=admin,ou=omusers,dc=om,dc=internal

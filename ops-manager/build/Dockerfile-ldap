@@ -26,8 +26,6 @@ RUN chmod +x /tmp/init-ldap.sh && /tmp/init-ldap.sh
 
 EXPOSE 389
 
-EXPOSE 22
-
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
