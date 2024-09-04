@@ -25,11 +25,10 @@ For more complex tests the following have been included already. Nothing is stop
 | Load-balancer | :heavy_check_mark: | Balancer in front of single Ops Manager |
 | Proxy | :heavy_check_mark: | Squid running on port `proxy.om.internal:3128` |
 | SMTP | :heavy_check_mark: | `smtp.om.internal` on 1025, web viewer in 1080 |
+| LDAP | :heavy_check_mark: | [LDAP](/ops-manager/docs/LDAP.md) |
 | Prometeus | :x: | Not included yet |
-| LDAP | :x: | Not included yet |
 | Kerberos | :x: | Not included yet |
 | KMIP | :x: | Not included yet |
-| LDAP Server | :heavy_check_mark: | [LDAP](/ops-manager/docs/LDAP.md) |
 
 ## Usage
 
