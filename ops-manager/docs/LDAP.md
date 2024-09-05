@@ -60,14 +60,13 @@ LDAP Global Role Read Only: `cn=readers,ou=omgroups,dc=om,dc=internal`
 3. `Review and Deploy` & `Approve and Deploy` the changes.
 4. Access the `Settings` tab and select `LDAP` Then select `Native LDAP Authentication`.
 ![](images/LDAP-08.png)
-![](images/LDAP-09.png)
 Server URL (Required): `ldap:389`
 Transport Security: `None`
 Bind Method: `Simple`
 SASL Mechanisms: `PLAIN`
 Query User (LDAP Bind DN): `cn=admin,dc=om,dc=internal`
 Query Password (LDAP Bind DN): `Password1!`
-![](images/LDAP-10.png)
+![](images/LDAP-09.png)
 ```
 [
   {
@@ -77,10 +76,10 @@ Query Password (LDAP Bind DN): `Password1!`
 ]
 ```
 5. Click on `Validate LDAP Configuration` and make sure it returns Green and OK - if not retrace your steps and follow this guide to the T.
-![](images/LDAP-11.png)
+![](images/LDAP-10.png)
 
 6. Under `LDAP Authorization` Turn on the `Acquire users and roles from LDAP` switch and fill in the following:
-![](images/LDAP-12.png)
+![](images/LDAP-11.png)
 Authorization Query Template: 
 ```
 {USER}?memberOf?base
