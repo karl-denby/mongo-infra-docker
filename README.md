@@ -6,16 +6,16 @@
 
 | Feature | Supported | Notes |
 | --- | --- | --- |
-| Ops Manager | :heavy_check_mark: | `cd ops-manager` |
-| Cloud Manager |  :heavy_check_mark: | `cd cloud-manager` If you have low RAM, consider this instead of Ops Manager |
-| MongoDB Agent | :heavy_check_mark: | - |
-| BI Connector | :heavy_check_mark: | [BI Connector](/ops-manager/docs/BICONNECTOR.md) |
-| Blockstore Backup | :heavy_check_mark: | - |
-| S3 Backup | :heavy_check_mark: | [S3 Backup](/ops-manager/docs/BACKUP.md) |
-| File Backup | :heavy_check_mark: | use `/filesystem` in Ops Manager |
-| Snapshot Restore | :heavy_check_mark: | - |
-| PIT Restore | :heavy_check_mark: | - |
-| Queryable Restore | :heavy_check_mark: | [Queryable](/ops-manager/docs/QUERY.md) |
+| Ops Manager | Yes | `cd ops-manager` |
+| Cloud Manager |  Yes | `cd cloud-manager` If you have low RAM, consider this instead of Ops Manager |
+| MongoDB Agent | Yes | - |
+| BI Connector | Yes | [BI Connector](/ops-manager/docs/BICONNECTOR.md) |
+| Blockstore Backup | Yes | - |
+| S3 Backup | Yes | [S3 Backup](/ops-manager/docs/BACKUP.md) |
+| File Backup | Yes | use `/filesystem` in Ops Manager |
+| Snapshot Restore | Yes | - |
+| PIT Restore | Yes | - |
+| Queryable Restore | Yes | [Queryable](/ops-manager/docs/QUERY.md) |
 
 For more complex tests the following have been included already. Nothing is stopping you using your own also, these will  be added based on demand.
 
@@ -130,10 +130,11 @@ If you followed steps 1 - 5 you should have something like this within 10 minute
 
 ## Disclaimer
 
-This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under any of their commercial support subscriptions or otherwise. Any usage of this tool is at your own risk. It's intended only to serve as a quick test environment.
+This software is not supported by [MongoDB, Inc](https://www.mongodb.com) under any of their commercial support subscriptions or otherwise. Any usage of this tool is at your own risk. It's intended only to serve as a quick test/reproduction environment.
 
 ## Changelog
 
+- 2024-09-30 Initial support for Ops Manager 8.0
 - 2024-09-03 BI Connector on ARM documented
 - 2024-06-05 Added `extras.sh` to streamline addisions to the basic environment
 - 2024-06-04 Queryable works on ARM by default with 6.0.15 being available for queryable instance
