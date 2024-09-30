@@ -3,29 +3,39 @@
 if [[ "$DOCKER_DEFAULT_PLATFORM" == linux/amd64 ]]
 then
   echo "Looks like you've set DOCKER_DEFAULT_PLATFORM to force amd64:"
-  echo " - We want to run an native aarch64 container for you"
+  echo " - We want to run a native aarch64 container for you, don't worry we will swap the jdk"
   echo " - You could try unset DOCKER_DEFAULT_PLATFORM, then run this again"
   echo " - More details https://github.com/karl-denby/mongo-infra-docker/issues/72"
   exit 1
 fi
 
-version_options=("7-0-10" "6-0-25" "downloaded")
+version_options=("8-0-0" "7-0-10" "6-0-25" "downloaded")
 echo Please choose a version: 
 select opt in "${version_options[@]}"
 do
   case $opt in
+    8-0-0)
+      export version='8.0.0'
+      export version_for_url='8.0'
+      touch downloads/8.ver 2>&1
+      rm downloads/7.ver 2>&1
+      rm downloads/6.ver 2>&1
+      break
+      ;;
     7-0-10)
       export version='7.0.10'
       export version_for_url='7.0'
-      touch downloads/7.ver
+      rm downloads/8.ver 2>&1
+      touch downloads/7.ver 2>&1
       rm downloads/6.ver 2>&1
       break
       ;;
     6-0-25)
       export version='6.0.25'
       export version_for_url='6.0'
-      touch downloads/6.ver
+      rm downloads/8.ver 2>&1
       rm downloads/7.ver 2>&1
+      touch downloads/6.ver 2>&1
       break
       ;;    
     downloaded)
@@ -90,6 +100,11 @@ do
 done
 
 # Set up urls based on the above parameters
+if [[ "$version" == "8.0.0" ]] # Updates JDK to jdk-17.0.12+7.
+then
+  urls=("https://repo.mongodb.com/yum/redhat/8/mongodb-enterprise/${version_for_url}/${platform}/RPMS/mongodb-enterprise-server-7.0.0-1.el8.${platform}.rpm" "https://downloads.mongodb.com/on-prem-mms/rpm/mongodb-mms-8.0.0.500.20240924T1611Z.x86_64.rpm" "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.4%2B7/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.4_7.tar.gz" "http://localhost:8080/download/agent/automation/mongodb-mms-automation-agent-manager-latest.${platform}.${distro}.rpm")
+fi
+
 if [[ "$version" == "7.0.10" ]] # Updates JDK to jdk-17.0.12+7.
 then
   urls=("https://repo.mongodb.com/yum/redhat/8/mongodb-enterprise/${version_for_url}/${platform}/RPMS/mongodb-enterprise-server-7.0.0-1.el8.${platform}.rpm" "https://downloads.mongodb.com/on-prem-mms/rpm/mongodb-mms-7.0.10.500.20240731T2149Z.x86_64.rpm" "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.12%2B7/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.12_7.tar.gz" "http://localhost:8080/download/agent/automation/mongodb-mms-automation-agent-manager-latest.${platform}.${distro}.rpm")
