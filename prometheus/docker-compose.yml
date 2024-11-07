@@ -1,0 +1,50 @@
+services:
+
+  # First setup your atlas cluster
+  # Second go to alerts, integrations and prometheus
+  # config a user 
+  prometheus:
+    container_name: prometheus
+    deploy:
+      resources:
+        limits:
+          cpus: '2.000'
+          memory: 4G
+        reservations:
+          cpus: '1.000'
+          memory: 2G
+    hostname: prometheus.internal
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+
+  # username: admin
+  # password: admin / it will ask you to change after first login
+  # setup a prometheus data source on http://prometheus.internal:9090
+  # create a dashboard with some metric
+
+  grafana:
+    container_name: grafana
+    deploy:
+      resources:
+        limits:
+          cpus: '1.000'
+          memory: 1G
+        reservations:
+          cpus: '0.500'
+          memory: 0.5G
+    hostname: grafana.internal
+    image: grafana/grafana-enterprise
+    restart: unless-stopped
+    ports:
+     - '3000:3000'
+
+  # Example of a metric used in a query (change the group_id to match yours)
+  # sum(rate(hardware_system_cpu_steal_milliseconds{group_id="666ff4e53f32e174b5f431d3"}[30s]) / 10) by (instance)
+
+volumes:
+  prometheus-data:
+

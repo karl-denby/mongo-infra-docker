@@ -1,0 +1,35 @@
+# my global config
+global:
+  scrape_interval:     60s
+  evaluation_interval: 60s
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      #- 127.0.0.1:9093
+
+rule_files:
+  - 'alerts.yml'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['localhost:9090']
+  
+  # Place the data you get from Atlas here, indetation is important, job_name under this line should
+  # be level with the job_name above this line
+  
+  - job_name: "karl.denby-mongo-metrics"
+    scrape_interval: 10s
+    metrics_path: /metrics
+    scheme : https
+    basic_auth:
+      username: prom_user_6509817e719c4341040972a2
+      password: X2oniGFLkixrrpsF
+    http_sd_configs:
+      - url: https://cloud.mongodb.com/prometheus/v1.0/groups/666ff4e53f32e174b5f431d3/discovery
+        refresh_interval: 60s
+        basic_auth:
+          username: prom_user_6509817e719c4341040972a2
+          password: X2oniGFLkixrrpsF
