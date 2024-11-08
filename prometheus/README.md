@@ -24,7 +24,7 @@
           password: X2oniGFLkixrrpsF
 ```
 
-Your's will have a different name (based on Atlas project), your username and password should be whatever you set. Obviously the url will container your project/group id.
+Your's will have a different name (based on Atlas project), your username and password should be whatever you set. Obviously the url will contain your project/group id.
 
 Copy this into the `prometheus.yml` file make sure the indentation of 'job_name' lines up.
 
@@ -42,11 +42,11 @@ This will start prometheus which will collect and store metrics. It will also st
 - You can view Grafana locally on http://localhost:3000
   - username is admin
   - password is admin # needs to be changed on first login
-  - You can tell Grafana to use a prometheus data source on http://prometheus.local:9090
+  - You can tell Grafana to use a prometheus data source on http://prometheus.internal:9090
   - You can create a dashboard using the prometheus data source with any metric you like
   - If you want an example of a complex query in a graph try something like
   - `sum(rate(hardware_system_cpu_steal_milliseconds{group_id="666ff4e53f32e174b5f431d3"}[30s]) / 10) by (instance)`
-  - change the group_id to match your project you may need to switch to code view instead of builder vew 
+  - change the group_id to match your project you may need to switch to code view instead of builder view
 
 ## Common issues
 
