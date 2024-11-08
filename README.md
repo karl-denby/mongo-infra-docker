@@ -25,7 +25,7 @@ For more complex tests the following have been included already. Nothing is stop
 | Load-balancer | Yes | Balancer in front of single Ops Manager |
 | Proxy | Yes | Squid running on port `proxy.om.internal:3128` |
 | SMTP | Yes | `smtp.om.internal` on 1025, web viewer in 1080 |
-| Prometeus | No | Not included yet |
+| Prometeus/Grafana | Yes | [Enable Prometheus](/prometheus/README.md) |
 | LDAP | No | Not included yet |
 | Kerberos | No | Not included yet |
 | KMIP | No | Not included yet |
