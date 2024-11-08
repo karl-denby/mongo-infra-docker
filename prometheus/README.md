@@ -52,6 +52,7 @@ This will start prometheus which will collect and store metrics. It will also st
 
 - prometheus on your laptop has to be able to reach Atlas and be on the IP access list, so if it works for a while, then your IP changes, you may notice it stop working. Go to the Atlas IP access list and add your current IP to get it going again
 - If you setup a new cluster you may see old data that has been stored in the /prometheus volume, remove the volume if your just testing and redeploying
+- If you add 0.0.0.0/0 to your access list prometheus will be disabled, to re-enable it you have to remove 0.0.0.0/0 from the access list
 
 ## Clean up
 - pause everything `docker compose pause`
