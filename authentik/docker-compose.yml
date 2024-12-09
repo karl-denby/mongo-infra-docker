@@ -124,7 +124,7 @@ services:
     environment:
         AUTHENTIK_HOST: http://server:9000
         AUTHENTIK_INSECURE: "false"
-        AUTHENTIK_TOKEN: rV6YBZhArJ7EOEZqQXVvg7eKqWoqnysCYR9ivgu0bP7MZJ396ezONY5f9ePv
+        AUTHENTIK_TOKEN: s4vflFdXrrs8aX3kp98n6NoQbM8G63I1dNfSkh76cUYvGmz5DL74up9RSo01
           
 networks:
   ops-manager_main:
