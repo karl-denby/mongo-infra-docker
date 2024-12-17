@@ -122,10 +122,23 @@ services:
         - 389:3389
         - 636:6636
     environment:
-        AUTHENTIK_HOST: http://server:9000
-        AUTHENTIK_INSECURE: "false"
+        AUTHENTIK_HOST: http://server.om.internal:9000
+        AUTHENTIK_INSECURE: "true"
         AUTHENTIK_TOKEN: s4vflFdXrrs8aX3kp98n6NoQbM8G63I1dNfSkh76cUYvGmz5DL74up9RSo01
-          
+
+  firefox:
+    image: jlesage/firefox
+    networks:
+      ops-manager_main: 
+        aliases:
+          - client
+          - client.om.internal
+          - client.alt.internal
+    ports:
+      - "5800:5800"
+    volumes:
+      - "/docker/appdata/firefox:/config:rw"
+
 networks:
   ops-manager_main:
     external: true

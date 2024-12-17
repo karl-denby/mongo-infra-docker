@@ -1,13 +1,6 @@
 # This is in-progress don't expect much yet
 
-## Work done so far
-
-- setup docker compose and .env files so that `docker compose up -d` will get authentik running
-- created a README.md for adding documentation, as this will need some
-- update the main readme to reference this document
-- create the branch and upload it to github
-
-## Setup of Authentik for LDAP
+## Setup of Authentik
 
 - Setup an OM first as that is what will create the network for us
   - Sign up as the first user `akadmin` (AK Admin)
@@ -15,14 +8,23 @@
   - you can proceed to setup ops manager or wait on the authentication configuration page
 - Make sure you are in the authentik folder (you are probably still in the ops-manager folder `cd ../authentik`)
 - `docker compose up -d`
-- Once its done visit http://localhost:9000
-  - If you where here before you can use the user you setup previously
+- Once its done visit http://localhost:5800
+- This is a client on the docker network running firefox, so you can use it to access both ops manager and authentik with native host name resolution instead of relying on ip/port mappings
+  - visit http://server.om.internal:9000 in this remote firefox
+  - If you where here before you can use the user `akadmin` or `root@example.com` you setup previously
   - Otherwise setup a new user
   - if you forgot how to log in a previous user run this to generate the recovery
   - `docker compose run --rm server create_recovery_key 10 akadmin`
   - add whatever it outputs to the url
   - Click the settings gear cog
   - Click **Change Password** and set something you will remember
+
+## Setup of Authentik for SAML
+
+This part is not working yet, could be Ops Manager (works with everything else) or could be Authentik (seem likely), avoid for now its a time sink.
+
+## Setup of Authentik for LDAP
+
 - Click **Admin Interface**
 - Navigate to Applications > Providers  > Create
   - LDAP provider
@@ -41,9 +43,9 @@
 - Click on your new ldap-provider 'View Deployment Info'
 - Click to copy token
 - Update the docker-compose.yml file with this token, its near the end `AUTHENTIK_TOKEN: s4vflFdXrrs8aX3kp98n6NoQbM8G63I1dNfSkh76cUYvGmz5DL74up9RSo01`
-- Run `docker compose up -d` to apply this change
+- Run `docker compose up -d` **again** to apply this change
 - Wait a few seconds and then refresh the outpost page, you want to see the status of ldap-provider is now green and not 'not available'
-- I want to start again `docker volume ls` will show you athentic volumes
+- If you want to start again `docker volume ls` will show you athentic volumes
   - remove them with `docker volume rm <volume>`
   - `docker volume prune` will clean up lots of stuff (maybe too much in some cases)
 
@@ -66,7 +68,7 @@
 - LDAP User Base Dn: dc=ldap,dc=goauthentik,dc=io
 - LDAP User Search Attribute: could be `sAMAccountName` (if you gave a name like akadmin for your user) or `mail` (if you gave your email address)
 - LDAP User Group: member
-- LDAP Global Role Owner: cn=authentik Admins,ou=groups,dc=ldap,dc=goauthentik,dc=io `if you used akadmin`
+- LDAP Global Role Owner: cn=authentik Admins,ou=groups,dc=ldap,dc=goauthentik,dc=io `if you used akadmin/root@example.com`
 
 ## Setup LDAP for an MongoDB Deployment
 
