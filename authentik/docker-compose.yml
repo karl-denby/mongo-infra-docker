@@ -1,0 +1,150 @@
+---
+
+services:
+  postgresql:
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    container_name: postgresql
+    networks:
+      ops-manager_main: 
+        aliases:
+          - postgresql
+          - postgresql.om.internal
+          - postgresql.alt.internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: authentik
+      POSTGRES_USER: authentik
+      POSTGRES_DB: authentik
+    env_file:
+      - .env
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    container_name: redis
+    restart: unless-stopped
+    networks:
+      ops-manager_main: 
+        aliases:
+          - redis
+          - redis.om.internal
+          - redis.alt.internal
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - redis:/data
+  server:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2024.10.4}
+    restart: unless-stopped
+    command: server
+    container_name: server
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: authentik
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: authentik
+    volumes:
+      - ./media:/media
+      - ./custom-templates:/templates
+    env_file:
+      - .env
+    networks:
+      ops-manager_main: 
+        aliases:
+          - server
+          - server.om.internal
+          - server.alt.internal  
+    ports:
+      - "${COMPOSE_PORT_HTTP:-9000}:9000"
+      - "${COMPOSE_PORT_HTTPS:-9443}:9443"
+    depends_on:
+      - postgresql
+      - redis
+  worker:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2024.10.4}
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: authentik
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: authentik
+    # `user: root` and the docker socket volume are optional.
+    # See more for the docker socket integration here:
+    # https://goauthentik.io/docs/outposts/integrations/docker
+    # Removing `user: root` also prevents the worker from fixing the permissions
+    # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
+    # (1000:1000 by default)
+    container_name: worker
+    networks:
+      ops-manager_main: 
+        aliases:
+          - worker
+          - worker.om.internal
+          - worker.alt.internal
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./media:/media
+      - ./certs:/certs
+      - ./custom-templates:/templates
+    env_file:
+      - .env
+    depends_on:
+      - postgresql
+      - redis
+
+  authentik_ldap:
+    image: ghcr.io/goauthentik/ldap
+    # Optionally specify which networks the container should be
+    # might be needed to reach the core authentik server
+    container_name: ldap
+    networks:
+      ops-manager_main: 
+        aliases:
+          - ldap
+          - ldap.om.internal
+          - ldap.alt.internal
+    ports:
+        - 389:3389
+        - 636:6636
+    environment:
+        AUTHENTIK_HOST: http://server.om.internal:9000
+        AUTHENTIK_INSECURE: "true"
+        AUTHENTIK_TOKEN: s4vflFdXrrs8aX3kp98n6NoQbM8G63I1dNfSkh76cUYvGmz5DL74up9RSo01
+
+  firefox:
+    image: jlesage/firefox
+    networks:
+      ops-manager_main: 
+        aliases:
+          - client
+          - client.om.internal
+          - client.alt.internal
+    ports:
+      - "5800:5800"
+    volumes:
+      - "/docker/appdata/firefox:/config:rw"
+
+networks:
+  ops-manager_main:
+    external: true
+
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
