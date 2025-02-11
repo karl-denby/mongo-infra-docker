@@ -1,6 +1,6 @@
 #!/bin/bash
 echo Please choose some extras: 
-platform_options=("pause" "un-pause" "more-servers" "oplog" "blockstore" "proxy" "load-balancer" "smtp" "s3" "clean" "Quit")
+platform_options=("pause" "un-pause" "more-servers" "oplog" "blockstore" "proxy" "load-balancer" "smtp" "s3" "kmip" "clean" "Quit")
 select opt in "${platform_options[@]}"
 do
   case $opt in
@@ -82,6 +82,11 @@ do
       echo "Hit Create and if everything was entered correctly, the metadata and s3 containers are running, it should complete."
       docker exec -it s3 ./garage bucket allow oplog --key my-key --read --write --owner 2>&1
       docker exec -it s3 ./garage bucket allow blockstore --key my-key --read --write --owner 2>&1
+      break
+      ;;
+    kmip)
+      echo "Starting KMIP Server on kmip.om.internal:5696"
+      docker compose up -d kmip
       break
       ;;
     clean)

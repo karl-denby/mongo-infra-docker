@@ -276,5 +276,32 @@ services:
       - "3903:3903"
       - "3904:3904"
 
+  kmip:
+#     image: ubuntu:20.04
+#     container_name: ubuntu_container
+#     tty: true   # Keeps the container running
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-pykmip
+    stdin_open: true  # Allows interactive mode
+    volumes:
+      - ./data:/data  # Optional: Mount a local folder to the container
+      - ./certs:/certs 
+    container_name: kmip
+    hostname: kmip.om.internal
+    deploy:
+      resources:
+        limits:
+          cpus: '0.250'
+          memory: 0.125G
+        reservations:
+          cpus: '0.125'
+          memory: 0.062G  
+    networks:
+      main:
+        aliases:
+         - kimp
+         - kmip.om.internal
+    restart: unless-stopped
 networks:
   main:
