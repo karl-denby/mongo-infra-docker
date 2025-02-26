@@ -277,15 +277,12 @@ services:
       - "3904:3904"
 
   kmip:
-#     image: ubuntu:20.04
-#     container_name: ubuntu_container
-#     tty: true   # Keeps the container running
     build:
       context: .
       dockerfile: ./build/Dockerfile-pykmip
-    stdin_open: true  # Allows interactive mode
+    stdin_open: true
     volumes:
-      - ./data:/data  # Optional: Mount a local folder to the container
+      - ./data:/data
       - ./certs:/certs 
     container_name: kmip
     hostname: kmip.om.internal

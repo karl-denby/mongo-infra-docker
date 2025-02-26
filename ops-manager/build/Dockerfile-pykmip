@@ -1,13 +1,5 @@
 FROM ubuntu:22.04
 
-# Set non-interactive mode to prevent interactive prompts during installation
-# ENV DEBIAN_FRONTEND=noninteractive
-
-# Update and install dependencies
-# RUN apt update && apt install -y \ 
-#    python3-dev libffi-dev libssl-dev libsqlite3-dev openssl openssh-server iputils-ping hostname \
-#    apt clean && rm -rf /var/lib/apt/lists/*
-
 RUN echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf.d/00-docker
 RUN echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf.d/00-docker
 RUN DEBIAN_FRONTEND=noninteractive \
