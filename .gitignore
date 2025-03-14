@@ -6,4 +6,6 @@ mongosync/mongosync-1.7.3
 ops-manager/garage/data/*
 ops-manager/garage/meta/*
 ops-manager/downloads/*
-!ops-manager/downloads/
+!ops-manager/downloads
+.gitignore
+.DS_Store/
