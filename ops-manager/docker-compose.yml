@@ -300,5 +300,34 @@ services:
          - kimp
          - kmip.om.internal
     restart: unless-stopped
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Web console
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - ./minio-data:/data
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.750'
+          memory: 0.5G
+        reservations:
+          cpus: '0.125'
+          memory: 0.125G    
+    networks:
+      main:
+        aliases:
+         - minio
+         - minio.om.internal
+         - minio.alt.internal
+         
 networks:
   main:

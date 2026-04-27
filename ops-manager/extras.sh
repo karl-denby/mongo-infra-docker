@@ -1,6 +1,6 @@
 #!/bin/bash
 echo Please choose some extras: 
-platform_options=("pause" "un-pause" "more-servers" "oplog" "blockstore" "proxy" "load-balancer" "smtp" "s3" "kmip" "clean" "Quit")
+platform_options=("pause" "un-pause" "more-servers" "oplog" "blockstore" "proxy" "load-balancer" "smtp" "s3" "kmip" "minio-S3" "clean" "Quit")
 select opt in "${platform_options[@]}"
 do
   case $opt in
@@ -89,14 +89,47 @@ do
       docker compose up -d kmip
       break
       ;;
+    minio-S3)
+      MINIO_CONTAINER=minio
+      ENDPOINT=http://minio.om.internal:9000
+      ACCESS_KEY=minioadmin
+      SECRET_KEY=minioadmin
+      ALIAS=infra-minio
+      docker compose up -d minio metadata
+      echo "Configuring MinIO S3 ..."
+      until docker exec "$MINIO_CONTAINER" \
+      mc alias set "$ALIAS" "$ENDPOINT" "$ACCESS_KEY" "$SECRET_KEY" >/dev/null 2>&1
+      do
+        echo "MinIO not ready yet..."
+        sleep 2
+      done
+      docker exec "$MINIO_CONTAINER" mc mb "$ALIAS"/snapshot-store
+      docker exec "$MINIO_CONTAINER" mc mb "$ALIAS"/oplog-store
+      docker exec "$MINIO_CONTAINER" mc mb --with-lock "$ALIAS"/immutable-snapshot-store
+      echo "  "
+      echo "Configure Ops Manager Backup to use MinIO S3 bucket:"
+      echo " - Go to Admin >> Backup, Enter '/head' and hit Set, then Enable Daemon"
+      echo " - Configure A S3 Blockstore, Advanced Setup then Create New S3 Blockstore or S3 Oplog"
+      echo " - S3 Bucket Name = snapshot-store  (or oplog-store or immutable-snapshot-store)"
+      echo " - S3 Endpoint = http://minio.om.internal:9000"
+      echo " - Path Style Access = Enabled"
+      echo " - Server Side Encryption = Disabled"
+      echo " - AWS Access Key = minioadmin"
+      echo " - AWS Secret Key = minioadmin"
+      echo " - Object Lock = Disabled  (if you created the immutable-snapshot-store bucket set this to on, otherwise off)"
+      echo " - If you require the immutable-snapshot-store to have a default retention policy, run this command:"
+      echo "   docker exec minio sh -c \"mc alias set infra-minio http://minio.om.internal:9000 minioadmin minioadmin && mc retention set --default COMPLIANCE 30d infra-minio/immutable-snapshot-store\""  
+      break
+      ;; 
     clean)
       echo "cleaning up s3 data"
       docker exec -it s3 ./garage bucket delete --yes oplog
       docker exec -it s3 ./garage bucket delete --yes blockstore
       docker exec -it s3 ./garage key delete --yes my-key
+      docker exec minio sh -c "mc alias set infra-minio http://minio.om.internal:9000 minioadmin minioadmin && mc rb --force infra-minio/snapshot-store && mc rb --force infra-minio/oplog-store && mc rb --force infra-minio/immutable-snapshot-store"
       echo "Removing all containers"
       docker compose down
-      docker image rm ops-manager-ops ops-manager-node1 ops-manager-node2 ops-manager-node3 metadata s3 smtp lb proxy blockstore oplog 2>&1
+      docker image rm ops-manager-ops ops-manager-node1 ops-manager-node2 ops-manager-node3 metadata s3 minio smtp lb proxy blockstore oplog 2>&1
       break
       ;;
     Quit)
