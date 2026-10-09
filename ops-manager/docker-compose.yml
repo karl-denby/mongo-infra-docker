@@ -301,19 +301,37 @@ services:
          - kmip.om.internal
     restart: unless-stopped
 
-  minio:
-    image: minio/minio:latest
-    container_name: minio
+  rustfs:
+    image: rustfs/rustfs:1.0.0
+    container_name: rustfs
+
     ports:
       - "9000:9000"   # S3 API
       - "9001:9001"   # Web console
+
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      RUSTFS_ACCESS_KEY: rustfsadmin
+      RUSTFS_SECRET_KEY: rustfsadmin
+      RUSTFS_ADDRESS: ":9000"
+      RUSTFS_CONSOLE_ADDRESS: ":9001"
+      RUSTFS_CONSOLE_ENABLE: "true"
+
     volumes:
-      - ./minio-data:/data
-    command: server /data --console-address ":9001"
+      - ./rustfs-data:/data
+
     restart: unless-stopped
+
+    command: /data
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "curl --fail http://127.0.0.1:9000/health/ready"
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
     deploy:
       resources:
         limits:
@@ -321,13 +339,64 @@ services:
           memory: 0.5G
         reservations:
           cpus: '0.125'
-          memory: 0.125G    
+          memory: 0.125G
+
     networks:
       main:
         aliases:
-         - minio
-         - minio.om.internal
-         - minio.alt.internal
+          - rustfs
+          - rustfs.om.internal
+          - rustfs.alt.internal
+
+# rust init container to configure S3 buckets
+  rustfs-init:
+    image: rustfs/rc:v0.1.35
+
+    depends_on:
+      rustfs:
+        condition: service_healthy
+
+    entrypoint: ["/bin/sh", "-ec"]
+
+    command:
+      - |
+        echo "Configuring RustFS S3..."
+
+        rc alias set \
+          infra-rustfs \
+          http://rustfs:9000 \
+          "rustfsadmin" \
+          "rustfsadmin" \
+          --region us-east-1 \
+          --bucket-lookup path
+
+        echo "Creating snapshot-store..."
+        rc bucket create \
+          --ignore-existing \
+          infra-rustfs/snapshot-store
+
+        echo "Creating oplog-store..."
+        rc bucket create \
+          --ignore-existing \
+          infra-rustfs/oplog-store
+
+        echo "Creating immutable-snapshot-store with Object Lock..."
+        rc bucket create \
+          --ignore-existing \
+          --with-lock \
+          infra-rustfs/immutable-snapshot-store
+
+        echo ""
+        echo "RustFS buckets:"
+        rc bucket list infra-rustfs
+
+        echo ""
+        echo "RustFS bucket provisioning complete."
+
+    restart: "no"
+    networks:
+      main:
+
          
 networks:
   main:
